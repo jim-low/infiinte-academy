@@ -1,9 +1,11 @@
-# Infinite Academy
+# Infinity Academy
 
 Object-Oriented Programming College Assignment
 Assignment Task: Create a Payment and Registration system
 
-Delegation:
+Description: A Console-Based Payment and Registration System made entirely in Java for a College Assignment
+
+Task Delegation:
 - Jim: personnel
 - Zi Yu: system
 - Wei San: management
