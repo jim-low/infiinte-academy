@@ -4,4 +4,5 @@
 /build.xml
 /manifest.mf
 /nbproject
+/**/*.class
 
