@@ -5,4 +5,5 @@
 /manifest.mf
 /nbproject
 /**/*.class
+/src/Makefile
 
