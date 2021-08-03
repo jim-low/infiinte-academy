@@ -1,6 +1,6 @@
 package management;
 
-public class Registration {
+public interface Registration {
     // type your code here, all the best
 }
 

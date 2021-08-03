@@ -1,6 +1,6 @@
-package main;
+package management;
 
-public class Main {
+public class Academy {
     public static void main(String[] args) {
     }
 

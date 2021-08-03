@@ -1,6 +1,7 @@
 package payment;
 
-public abstract class Transaction {
+public class Card {
     // type your code here, all the best
 }
+
 

@@ -1,6 +1,6 @@
 package payment;
 
-public class Receipt {
+public interface Receipt {
     // type your code here, all the best
 }
 

@@ -1,6 +1,6 @@
-package payment;
+package system;
 
-public class Invoice {
+public class Slot {
     // type your code here, all the best
 }
 

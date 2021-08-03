@@ -1,6 +1,6 @@
 package management;
 
-public class Reservation {
+public interface Reservation {
     // type your code here, all the best
 }
 
