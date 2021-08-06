@@ -21,9 +21,9 @@ public class Academy {
     private static void parseChoice(int choice) {
         if (loggedInStudent == null && loggedInInstructor == null)
             parseFirstTimeLogin(choice);
-	}
+    }
 
-	private static void parseFirstTimeLogin(int choice) {
+    private static void parseFirstTimeLogin(int choice) {
         switch (choice) {
             case 1:
                 // Registration.performRegistration();
@@ -39,7 +39,7 @@ public class Academy {
                 System.out.println("# shame less self sponser");
                 break;
         }
-	}
+    }
 
     private static void showMenu() {
         showAcademyBanner();
@@ -54,7 +54,7 @@ public class Academy {
         System.out.println("4. Meet The Team");
     }
 
-	private static void showAcademyBanner() {
+    private static void showAcademyBanner() {
         System.out.println("__      __   _                    _         ___       __ _      _ _            _              _");
         System.out.println("\\ \\    / /__| |__ ___ _ __  ___  | |_ ___  |_ _|_ _  / _(_)_ _ (_) |_ _  _    /_\\  __ __ _ __| |___ _ __ _  _");
         System.out.println(" \\ \\/\\/ / -_) / _/ _ \\ '  \\/ -_) |  _/ _ \\  | || ' \\|  _| | ' \\| |  _| || |  / _ \\/ _/ _` / _` / -_) '  \\ || |");
