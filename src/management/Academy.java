@@ -26,7 +26,7 @@ public class Academy {
     private static void parseFirstTimeLogin(int choice) {
         switch (choice) {
             case 1:
-                // Registration.performRegistration();
+                Registration.performRegistration();
                 break;
             case 2:
                 System.out.println("Performing login, yup you are logged in");
