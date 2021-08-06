@@ -1,7 +1,14 @@
 package management;
 
+import personnel.Student;
+import personnel.Instructor;
+
 public class Academy {
+    private static Student loggedInStudent = null;
+    private static Instructor loggedInInstructor = null;
+
     public static void main(String[] args) {
+        showMenu();
     }
 
     public static void showAcademyBanner() {
@@ -12,14 +19,17 @@ public class Academy {
         System.out.println("                                                                      |__/                               |__/");
     }
 
-    public static void splashMenu() {
+    public static void showMenu() {
         showAcademyBanner();
+        if (loggedInStudent == null && loggedInInstructor == null)
+            firstLoginMenu();
     }
 
     public static void firstLoginMenu() {
         System.out.println("1. Sign Up For An Account In Infinity Academy");
-        System.out.println("2. About Infinity Academy");
-        System.out.println("3. Meet The Team");
+        System.out.println("2. Log In To Infinity Academy");
+        System.out.println("3. About Infinity Academy");
+        System.out.println("4. Meet The Team");
     }
 }
 
