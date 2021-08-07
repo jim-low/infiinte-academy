@@ -1,6 +1,5 @@
 package management;
 
-import payment.Payment;
 import personnel.Instructor;
 import personnel.Student;
 
@@ -10,10 +9,7 @@ public interface Registration {
         // 2. payment
         // 3. add into list
         String accountType = promptAccountType();
-        // boolean paid = true;
-        // if (paid)
-        //     Instructor.add(new Instructor());
-        // Student.add(new Student());
+        // use the setupInstructor, setupPerson and setupStudent in this method
     }
 
     private static String promptAccountType() {
@@ -31,6 +27,24 @@ public interface Registration {
         }
 
         return type == 1 ?  "Instructor" : "Student";
+    }
+
+    private static Instructor setupInstructor() {
+        // instructor needs the following:
+        // - qualification
+        // - course
+    }
+
+    private static Student setupStudent() {
+        // student only needs Person object
+    }
+
+    private static Person setupPerson() {
+        // Person needs the following:
+        // - name
+        // - ic number (questionable)
+        // - gender (preferrably able to select rather than type)
+        // - email
     }
 }
 
