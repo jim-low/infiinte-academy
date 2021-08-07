@@ -1,11 +1,19 @@
 package management;
 
+import payment.Payment;
+import personnel.Instructor;
+import personnel.Student;
+
 public interface Registration {
     public static void performRegistration() {
         // 1. prompt account type
         // 2. payment
         // 3. add into list
         String accountType = promptAccountType();
+        // boolean paid = true;
+        // if (paid)
+        //     Instructor.add(new Instructor());
+        // Student.add(new Student());
     }
 
     private static String promptAccountType() {
