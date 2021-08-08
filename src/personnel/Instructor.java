@@ -1,29 +1,34 @@
 package personnel;
+
 import java.util.ArrayList;
 import system.*;
 import management.Reservation;
 
-
-public class Instructor implements Reservation{
+public class Instructor extends Person implements Reservation{
     // type your code here, all the best
     private String qualification;
     private Course course;
     private Session[] studentAttendance;
     private static ArrayList<Instructor> instructorList;
 
-    public Instructor(String qualification) {
-        this.qualification = qualification;
+    public Instructor(String name, String icNo, String gender, String email, String qualification) {
+        this(name, icNo, gender, email, qualification, null);
     }
 
-    public Instructor(Course course) {
+    public Instructor(String name, String icNo, String gender, String email, Course course) {
+        this(name, icNo, gender, email, "", course);
+    }
+
+    public Instructor(String name, String icNo, String gender, String email, String qualification, Course course) {
+        super(name, icNo, gender, email);
+        this.qualification = qualification;
         this.course = course;
     }
-
-    public Instructor(String qualification, Course course) {
-        this.qualification = qualification;
-        this.course = course;
+    
+    public static void add(Instructor instructor){
+        instructorList.add(instructor);
     }
-
+    
     public String getQualification() {
         return qualification;
     }
@@ -41,29 +46,6 @@ public class Instructor implements Reservation{
     }
     
     public String toString(){
-        return ("String");
-    }
-    
-    public static void add(Instructor instructor){
-        instructorList.add(instructor);
+        return "";
     }
 }
-
-/*
-
-variables:
-    private
-    protected
-    default
-    public
-
-constructors:
-    constructor with no parameter
-    constructor with some parameter
-    constructor with all parameter
-
-methods:
--normals methods
--getters and setters
-
-*/
