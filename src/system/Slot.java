@@ -12,8 +12,10 @@ public class Slot {
         this.endTime = endTime;
     }
 
-    public Calendar getStartTime() {
-        return startTime;
+    public String getStartTime() {
+        int hours = startTime.get(Calendar.HOUR);
+        int minutes = startTime.get(Calendar.MINUTE);
+        return hours + ":" + minutes;
     }
 
     public void setStartTime(Calendar startTime) {
@@ -29,6 +31,6 @@ public class Slot {
     }
     
     public String toString(){
-        return String.format("%-10s %-10s\n", startTime, endTime);
+        return String.format("%s\t%s", this.getStartTime(), this.getEndTime());
     }
 }

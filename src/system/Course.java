@@ -5,21 +5,15 @@ public class Course {
     private String courseName;
     private double courseFee;
     private String fieldOfStudy;
-    private Session session;
-    private final static String[] AVAILABLE_FIELDS = {"", "", "", ""};
-    private final static int MAX_STUDENTS = 100;
-
-    public Course() {
-    }
+    public final static String[] AVAILABLE_FIELDS = {"", "", "", ""};
+    public final static int MAX_STUDENTS = 100;
     
     public Course(String courseName, String fieldOfStudy) {
-        this.courseName = courseName;
-        this.fieldOfStudy = fieldOfStudy;
+        this(courseName, 0.0, fieldOfStudy);
     }
     
     public Course(double courseFee, String fieldOfStudy) {
-        this.courseFee = courseFee;
-        this.fieldOfStudy = fieldOfStudy;
+        this("", courseFee, fieldOfStudy);
     }
 
     public Course(String courseName, double courseFee, String fieldOfStudy) {
@@ -28,12 +22,20 @@ public class Course {
         this.fieldOfStudy = fieldOfStudy;
     }
     
+    public String toString(){
+        return String.format("%-20s %-10s %-20s\n", courseName, courseFee, fieldOfStudy);
+    }
+
     public String getCourseName() {
         return courseName;
     }
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+    
+    public String getFieldOfStudy() {
+        return fieldOfStudy;
     }
 
     public double getCourseFee() {
@@ -42,17 +44,5 @@ public class Course {
 
     public void setCourseFee(double courseFee) {
         this.courseFee = courseFee;
-    }
-
-    public String getFieldOfStudy() {
-        return fieldOfStudy;
-    }
-    
-    public String toString(){
-        return String.format("%-20s %-10s %-20s\n", courseName, courseFee, fieldOfStudy);
-    }
-    
-    public boolean performPayment(){
-        return true;
     }
 }

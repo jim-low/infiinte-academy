@@ -9,6 +9,9 @@ public class Session {
     private Instructor instructor;
 
     public Session(Slot slot, Course course, Instructor instructor) {
+        this.slot = slot;
+        this.course = course;
+        this.instructor = instructor;
     }
 
     public Slot getSlot() {
@@ -36,6 +39,6 @@ public class Session {
     }
     
     public String toString(){
-        return String.format("%-20s %-10s %-20s\n", slot, course, instructor);
+        return String.format("%-10s %-10s %-10s\n", slot, course, instructor);
     }
 }
