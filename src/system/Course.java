@@ -25,7 +25,7 @@ public class Course {
     public String toString(){
         return String.format("%-20s %-10s %-20s\n", courseName, courseFee, fieldOfStudy);
     }
-    
+
     public String getCourseName() {
         return courseName;
     }

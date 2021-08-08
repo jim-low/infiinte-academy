@@ -1,6 +1,7 @@
 package system;
 
 import personnel.*;
+
 public class Session {
     // type your code here, all the best
     private Slot slot;

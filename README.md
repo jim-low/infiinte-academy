@@ -5,9 +5,9 @@ Assignment Task: Create a Payment and Registration system
 
 Description: A Console-Based Payment and Registration System made entirely in Java for a College Assignment
 
-Task Delegation:
-- Jim: personnel
+## Task Delegation
+- Jim: management
 - Zi Yu: system
-- Wei San: management
+- Wei San: personnel
 - Jun Xian: payment
 
