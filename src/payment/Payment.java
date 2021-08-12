@@ -4,7 +4,6 @@ import java.util.Random;
 import management.Academy;
 
 public interface Payment {
-
     public static boolean performPayment(String type, double amount) {
         System.out.print("Enter your account number : ");
         String accountNo = Academy.scan.next();
@@ -25,7 +24,7 @@ public interface Payment {
         
         return amount == paidAmount;
     }
-
+  
     public static double generateRandomAmount(double min, double max) {
         Random r = new Random();
         return (min + (max - min) * r.nextDouble());
