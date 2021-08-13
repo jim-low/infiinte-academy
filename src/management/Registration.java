@@ -2,6 +2,7 @@ package management;
 
 import personnel.Instructor;
 import personnel.Student;
+import personnel.Person;
 
 public interface Registration {
     public static void performRegistration() {
@@ -9,7 +10,6 @@ public interface Registration {
         // 2. payment
         // 3. add into list
         String accountType = promptAccountType();
-        // use the setupInstructor, setupPerson and setupStudent in this method
     }
 
     private static String promptAccountType() {
@@ -42,9 +42,20 @@ public interface Registration {
     private static Person setupPerson() {
         // Person needs the following:
         // - name
-        // - ic number (questionable)
         // - gender (preferrably able to select rather than type)
         // - email
+        System.out.print("Enter your name: ");
+        String name = Academy.scan.nextLine();
+
+        System.out.println("Select your gender: ");
+        System.out.println("1. Male");
+        System.out.println("2. Female");
+        System.out.print("Your gender: ");
+        String gender = Academy.scan.nextInt() == 1 ? "Male" : "Female";
+
+        System.out.print("Enter your email: ");
+        String email = Academy.scan.next();
     }
+
 }
 
