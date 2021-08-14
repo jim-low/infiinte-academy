@@ -1,8 +1,6 @@
 package management;
 
-import personnel.Instructor;
-import personnel.Student;
-import personnel.Person;
+import personnel.*;
 
 public interface Registration {
     public static void performRegistration() {
@@ -10,6 +8,7 @@ public interface Registration {
         // 2. payment
         // 3. add into list
         String accountType = promptAccountType();
+        Person basicInfo = setupPerson();
     }
 
     private static String promptAccountType() {
@@ -29,16 +28,6 @@ public interface Registration {
         return type == 1 ?  "Instructor" : "Student";
     }
 
-    private static Instructor setupInstructor() {
-        // instructor needs the following:
-        // - qualification
-        // - course
-    }
-
-    private static Student setupStudent() {
-        // student only needs Person object
-    }
-
     private static Person setupPerson() {
         // Person needs the following:
         // - name
@@ -50,11 +39,14 @@ public interface Registration {
         System.out.println("Select your gender: ");
         System.out.println("1. Male");
         System.out.println("2. Female");
+        System.out.println();
         System.out.print("Your gender: ");
         String gender = Academy.scan.nextInt() == 1 ? "Male" : "Female";
 
         System.out.print("Enter your email: ");
         String email = Academy.scan.next();
+
+        return new Person(name, gender, email);
     }
 
 }
