@@ -4,26 +4,26 @@ public class Course {
     // type your code here, all the best
     private String courseName;
     private double courseFee;
-    private String fieldOfStudy;
+    private final String FIELD_OF_STUDY;
     public final static String[] AVAILABLE_FIELDS = {"", "", "", ""};
     public final static int MAX_STUDENTS = 100;
     
-    public Course(String courseName, String fieldOfStudy) {
-        this(courseName, 0.0, fieldOfStudy);
+    public Course(String courseName, String FIELD_OF_STUDY) {
+        this(courseName, 0.0, FIELD_OF_STUDY);
     }
     
-    public Course(double courseFee, String fieldOfStudy) {
-        this("", courseFee, fieldOfStudy);
+    public Course(double courseFee, String FIELD_OF_STUDY) {
+        this("", courseFee, FIELD_OF_STUDY);
     }
 
-    public Course(String courseName, double courseFee, String fieldOfStudy) {
+    public Course(String courseName, double courseFee, String FIELD_OF_STUDY) {
         this.courseName = courseName;
         this.courseFee = courseFee;
-        this.fieldOfStudy = fieldOfStudy;
+        this.FIELD_OF_STUDY = FIELD_OF_STUDY;
     }
     
     public String toString(){
-        return String.format("%-20s %-10s %-20s\n", courseName, courseFee, fieldOfStudy);
+        return String.format("%-20s %-10s %-20s\n", courseName, courseFee, FIELD_OF_STUDY);
     }
 
     public String getCourseName() {
@@ -35,7 +35,7 @@ public class Course {
     }
     
     public String getFieldOfStudy() {
-        return fieldOfStudy;
+        return FIELD_OF_STUDY;
     }
 
     public double getCourseFee() {
