@@ -29,10 +29,6 @@ public interface Registration {
     }
 
     private static Person setupPerson() {
-        // Person needs the following:
-        // - name
-        // - gender (preferrably able to select rather than type)
-        // - email
         System.out.print("Enter your name: ");
         String name = Academy.scan.nextLine();
 
