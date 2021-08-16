@@ -28,6 +28,42 @@ public interface Registration {
         return type == 1 ?  "Instructor" : "Student";
     }
 
+    private static Instructor setupInstructor(Person person) {
+        printQualificationsMenu();
+        System.out.print("Your Qualification: ");
+        String qualification = selectQualification(Academy.scan.nextInt());
+
+        System.out.print("Now you will be brought to setup your course.");
+        Course course = Course.setupCourse();
+
+        return new Instructor(person, qualification, course);
+    }
+
+    static String selectQualification(int choice) {
+        switch (choice) {
+            case 1:
+                return "SPM";
+            case 2:
+                return "Diploma";
+            case 3:
+                return "Degree";
+            case 4:
+                return "Masters";
+            case 5:
+                return "PhD";
+        }
+        return "";
+    }
+
+    static void printQualificationsMenu() {
+        System.out.println("Select your latest qualification:-");
+        System.out.println("1. SPM");
+        System.out.println("2. Diploma");
+        System.out.println("3. Degree");
+        System.out.println("4. Masters");
+        System.out.println("5. PhD");
+    }
+
     private static Student setupStudent(Person person) {
         return new Student(person);
     }
