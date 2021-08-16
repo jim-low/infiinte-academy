@@ -28,6 +28,10 @@ public interface Registration {
         return type == 1 ?  "Instructor" : "Student";
     }
 
+    private static Student setupStudent(Person person) {
+        return new Student(person);
+    }
+
     private static Person setupPerson() {
         System.out.print("Enter your name: ");
         String name = Academy.scan.nextLine();
