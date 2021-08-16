@@ -1,14 +1,26 @@
 package management;
 
 import personnel.*;
+import payment.Payment;
 
 public interface Registration {
     public static void performRegistration() {
-        // 1. prompt account type
-        // 2. payment
-        // 3. add into list
         String accountType = promptAccountType();
         Person basicInfo = setupPerson();
+
+        System.out.println("You will now be going through the payment process.");
+        if (!Payment.performPayment(accountType, Payment.generateRandomAmount())) {
+            System.out.println("Payment Unsuccessful. Account not registered.");
+            return;
+        }
+
+        if (accountType.equals("Student")) {
+            Student student = setupStudent(basicInfo);
+            Student.add(student);
+        } else {
+            Instructor instructor = setupInstructor(basicInfo);
+            Instructor.add(instructor);
+        }
     }
 
     private static String promptAccountType() {
