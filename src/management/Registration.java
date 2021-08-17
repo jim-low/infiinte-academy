@@ -1,6 +1,7 @@
 package management;
 
 import personnel.*;
+import system.Course;
 import payment.Payment;
 
 public interface Registration {
@@ -9,7 +10,8 @@ public interface Registration {
         Person basicInfo = setupPerson();
 
         System.out.println("You will now be going through the payment process.");
-        if (!Payment.performPayment(accountType, Payment.generateRandomAmount())) {
+        boolean paid = Payment.performPayment(accountType, Payment.generateRandomAmount());
+        if (!paid) {
             System.out.println("Payment Unsuccessful. Account not registered.");
             return;
         }
@@ -41,30 +43,10 @@ public interface Registration {
     }
 
     private static Instructor setupInstructor(Person person) {
-        printQualificationsMenu();
-        System.out.print("Your Qualification: ");
-        String qualification = selectQualification(Academy.scan.nextInt());
-
         System.out.print("Now you will be brought to setup your course.");
         Course course = Course.setupCourse();
 
-        return new Instructor(person, qualification, course);
-    }
-
-    static String selectQualification(int choice) {
-        switch (choice) {
-            case 1:
-                return "SPM";
-            case 2:
-                return "Diploma";
-            case 3:
-                return "Degree";
-            case 4:
-                return "Masters";
-            case 5:
-                return "PhD";
-        }
-        return "";
+        return new Instructor(person, course);
     }
 
     static void printQualificationsMenu() {
