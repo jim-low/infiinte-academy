@@ -7,7 +7,7 @@ public class Course {
     private final String FIELD_OF_STUDY;
     public final static String[] AVAILABLE_FIELDS = {"", "", "", ""};
     public final static int MAX_STUDENTS = 100;
-    
+
     public Course(String courseName, String FIELD_OF_STUDY) {
         this(courseName, 0.0, FIELD_OF_STUDY);
     }
@@ -21,7 +21,7 @@ public class Course {
         this.courseFee = courseFee;
         this.FIELD_OF_STUDY = FIELD_OF_STUDY;
     }
-    
+
     public String toString(){
         return String.format("%-20s %-10s %-20s\n", courseName, courseFee, FIELD_OF_STUDY);
     }
@@ -33,7 +33,7 @@ public class Course {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
-    
+
     public String getFieldOfStudy() {
         return FIELD_OF_STUDY;
     }
@@ -46,3 +46,4 @@ public class Course {
         this.courseFee = courseFee;
     }
 }
+

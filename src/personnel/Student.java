@@ -9,33 +9,33 @@ public class Student extends Person implements Reservation{
     private Course[] enrolledCourses;
     private Session[] reservedClasses;
     private static ArrayList<Student> studentList;
-    
+
     public Student(String name, String icNo, String gender, String email){
         super(name, icNo, gender, email);
     }
-    
+
     public static void add(Student student){
         studentList.add(student);
     }
-    
+
     public void enrollCourse(){
- 
+
     }
-    
+
     public void listCourse(){
-        
+
     }
-    
+
     public void changeCourse(){
-        
+
     }
-    
+
     public void dropCourse(){
-        
+
     }
-    
+
     public String toString(){
-        return ("String");
+        return "String";
     }
 }
 
