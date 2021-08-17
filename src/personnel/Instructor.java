@@ -24,11 +24,11 @@ public class Instructor extends Person implements Reservation{
         this.qualification = qualification;
         this.course = course;
     }
-    
+
     public static void add(Instructor instructor){
         instructorList.add(instructor);
     }
-    
+
     public String getQualification() {
         return qualification;
     }
@@ -44,8 +44,9 @@ public class Instructor extends Person implements Reservation{
     public void setCourse(Course course) {
         this.course = course;
     }
-    
+
     public String toString(){
         return "";
     }
 }
+
