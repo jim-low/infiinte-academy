@@ -18,6 +18,10 @@ public class Person {
         this(person.name,person.gender,person.email);
     }
     
+    public Person(String name) {
+        this(name, "", "");
+    }
+
     public Person(String name, String email) {
         this(name,"",email);
         
@@ -41,10 +45,6 @@ public class Person {
     public String getGender() {
         return gender;
     }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
     
     public boolean hasPaidFee(){
         return false;
@@ -54,24 +54,15 @@ public class Person {
         this.paidFee = paidFee;
     }
     
-    
-    
-    
-    public static void main(String[] args) {
-        Person p1 = new Person () {};
-
-        System.out.print(" Enter Your Full Name                : ");
-        p1.name = Academy.scan.nextLine();                
-        System.out.print(" Enter Your Gender (Male / Female)   : ");
-        p1.gender = Academy.scan.nextLine();
-        System.out.print(" Enter Your Full Email Address       : ");
-        p1.email = Academy.scan.nextLine();
-        System.out.print(" Have you paid your fees? (Yes / No) : ");
-        p1.paidFee = Academy.scan.equals(p1);
+    public static <T> T search (String name, Class<T> type){
+        T person = null;
         
+        if(type.equals(Student.class)){
+            person = type.cast(Student.search(name));
+        } else if(type.equals(Instructor.class)){
+            person = type.cast(Instructor.search(name));
+        }    
         
+        return person;
     }
-    
-    
-}
-
+ }

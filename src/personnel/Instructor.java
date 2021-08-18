@@ -5,37 +5,67 @@ import system.*;
 import management.Reservation;
 import management.Academy;
 
-
-//interface Reservation{
-//    public void addReservation();
-//    public void listReservations();
-//    public void editReservationDetails();
-//    public void removeReservation();
-//}
-
 public class Instructor extends Person implements Reservation {
-    private String[] qualifications = new String[10]; //add, list, edit, remove
+    private ArrayList<String> qualifications = new ArrayList<>();
     private Course course;
-    private Session[] classes;
-    private static ArrayList<Instructor> instructorList; 
-    private String instructorID;
+    private ArrayList<Session> classes = new ArrayList<>();
+    private static ArrayList<Instructor> instructorList = new ArrayList<>(); 
+    private int instructorID;
+    private static int nextInstructorID = 1;
     private boolean choice;
     
+    public Instructor(Person person, Course course){
+        this(person,"",course);
+    }
+    
     public Instructor(Person person, String instructorID){
+        this(person, instructorID, null);
+    }
+    
+    public Instructor(Person person, String instructorID, Course course){
         super(person);
-        this.instructorID = instructorID;
+        this.instructorID = nextInstructorID;
+        ++nextInstructorID;
+    }
+
+    public void addQualification(String qualification){
+        qualifications.add(qualification);
     }
     
-    public Instructor(String qualifications){
-        
+    public void editQualification(String qualification){
+        for(int i=0; i < qualifications.size(); i++){
+            if(qualifications.get(i).equals(qualification)){
+                System.out.println("Enter your updated qualifcation :");
+                String updated = Academy.scan.nextLine();
+                qualifications.set(i,updated);
+            }
+        }
     }
     
-    public Instructor(Course course){
-        
+    public void listQualification(){
+        System.out.print("Your Qualifications :");
+        for (int i = 0; i < qualifications.size(); i++) {
+            System.out.println(qualifications.get(i));
+        }
     }
     
-    public Instructor(String qualifications, Course course){
-        
+    public void removeQualification(String qualification){
+        qualifications.remove(qualification);   
+    }
+    
+    public static Instructor search(String name){
+        Instructor found = null;
+        for (Instructor instructor : instructorList) {
+            if(instructor.getName().equals(name)){
+                found = instructor;
+                break;
+            }
+        }
+        return found;
+    }
+    
+    public String toString(){
+        return super.toString() + String.format("Instructor ID : %7d \n", instructorID);
     }
     
     public Course getCourse() {
@@ -46,37 +76,6 @@ public class Instructor extends Person implements Reservation {
         this.course = course;
     }
 
-    public void addQualification(){
-        do{    
-            for (int i = 0; i < qualifications.length ; i++) {
-                System.out.print("Enter your Highest Qualification :");
-                qualifications[i] =Academy.scan.nextLine();
-                System.out.print("Do you want to continue adding your Qualifications ?");
-                choice = Academy.scan.nextBoolean();
-                
-            }
-        }while(choice == false );
-        System.out.print("You have reached the input maximum of 10.");         
-    }
-    
-    public void editQualification(){
-       
-    }
-    
-    public void listQualification(){
-        System.out.print("Your Qualifications :");
-        for (int i = 0; i < qualifications.length; i++) {
-            System.out.println(qualifications[i]);
-        }
-    }
-    
-    public void removeQualification(){
-       
-    }
-    
-    public String toString(){
-        return "";
-    }
     
     public static void add(Instructor instructor){
         instructorList.add(instructor);
@@ -85,4 +84,32 @@ public class Instructor extends Person implements Reservation {
     public static void remove(Instructor instructor){
         instructorList.remove(instructor);
     }   
+    
+    @Override
+    public void addReservation(Session session){
+        classes.add(session);
+        
+    }
+    
+    @Override
+    public void listReservation(){
+        System.out.print("          RESERVATION LIST           ");
+        System.out.print("-------------------------------------");
+        for (int i = 0; i < classes.size() ; i++) {
+                System.out.print(i+".");
+                System.out.println(" " +classes.get(i));
+            }
+        System.out.print("-------------------------------------");
+    }
+    
+    @Override
+    public void editReservation(int index, Session session){
+        classes.set(index, session);
+    }
+    
+    @Override
+    public void removeReservation(Session session){
+        classes.remove(session);
+    } 
 }
+
