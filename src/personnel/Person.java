@@ -1,21 +1,19 @@
 package personnel;
 
-import java.util.Scanner;
 import management.Academy;
 
 public class Person {
-//all private and put getter and setter
     private String name;
     private String gender;
     private String email;
     private boolean paidFee;
 
     public Person(){
-        this("","","");
+        this("", "", "");
     }
     
     public Person(Person person){
-        this(person.name,person.gender,person.email);
+        this(person.name, person.gender, person.email);
     }
     
     public Person(String name) {
@@ -23,7 +21,7 @@ public class Person {
     }
 
     public Person(String name, String email) {
-        this(name,"",email);
+        this(name, "", email);
         
     }
     
