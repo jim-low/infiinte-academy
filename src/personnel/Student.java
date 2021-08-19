@@ -64,7 +64,7 @@ public class Student extends Person implements Reservation {
     
     @Override
     public String toString(){
-        return super.toString() + String.format("Student ID : %s \nEnrolled Course : %s", studentID, enrolledCourses);
+        return super.toString() + String.format("Student ID : %s \n", studentID);
     }
     
     public void addReservation(Session session){

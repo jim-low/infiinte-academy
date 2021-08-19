@@ -45,7 +45,7 @@ public class Instructor extends Person implements Reservation {
     public void listQualification(){
         System.out.print("Your Qualifications :");
         for (int i = 0; i < qualifications.size(); i++) {
-            System.out.println(qualifications);
+            System.out.println(qualifications.get(i));
         }
     }
     
@@ -65,7 +65,7 @@ public class Instructor extends Person implements Reservation {
     }
     
     public String toString(){
-        return "";
+        return super.toString() + String.format("Instructor ID : %7d \n", instructorID);
     }
     
     public Course getCourse() {
@@ -75,6 +75,7 @@ public class Instructor extends Person implements Reservation {
     public void setCourse(Course course) {
         this.course = course;
     }
+
     
     public static void add(Instructor instructor){
         instructorList.add(instructor);
@@ -109,6 +110,6 @@ public class Instructor extends Person implements Reservation {
     @Override
     public void removeReservation(Session session){
         classes.remove(session);
-    }
+    } 
 }
 
