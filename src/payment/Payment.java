@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 import management.Academy;
 
@@ -14,7 +13,7 @@ public interface Payment {
         String accountNo = inputAccountNo();
         int intNo = inputcvcNo();
         System.out.printf("\n\nYOUR ACCOUNT HAS BEEN ACTIVATED IN OUR ACEDEMY\n");
-        
+
         System.out.printf("Enter the amount to pay (RM) : ");
         double paidAmount = Academy.scan.nextDouble();
 
@@ -22,9 +21,9 @@ public interface Payment {
         System.out.println("\nThank you for using our payment system.\n");
 
         return amount == paidAmount;
- 
+
     }
-    
+
     public static String inputAccountNo() {
         String accountNo, tempStr;
         do {
@@ -115,3 +114,4 @@ public interface Payment {
         System.out.println("Done\n");
     }
 }
+

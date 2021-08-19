@@ -37,8 +37,9 @@ public class Session {
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
-    
+
     public String toString(){
         return String.format("%-10s %-10s %-10s\n", slot, course, instructor);
     }
 }
+
