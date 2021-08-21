@@ -40,17 +40,20 @@ public class Academy {
     private static Instructor loggedInInstructor = null;
     private static int loginFlag = LoginFlags.NO_LOGIN;
     private static int choice;
+    private static boolean sessionEnd = false;
 
     public static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
-        showAcademyBanner();
-        showMenu();
-        System.out.println();
-        System.out.print("Your Choice: ");
-        choice = scan.nextInt();
-        parseChoice();
-        System.out.println();
+        while (!sessionEnd) {
+            showAcademyBanner();
+            showMenu();
+            System.out.println();
+            System.out.print("Your Choice: ");
+            choice = scan.nextInt();
+            parseChoice();
+            System.out.println();
+        }
     }
 
     private static void showMenu() {
