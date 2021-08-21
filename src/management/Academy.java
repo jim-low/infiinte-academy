@@ -21,6 +21,7 @@ public class Academy {
     public static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
+        showAcademyBanner();
         showMenu();
         System.out.println();
         System.out.print("Your Choice: ");
@@ -30,7 +31,6 @@ public class Academy {
     }
 
     private static void showMenu() {
-        showAcademyBanner();
         switch (loginFlag) {
             case LoginFlags.NO_LOGIN:
                 firstLoginMenu();
@@ -39,7 +39,7 @@ public class Academy {
     }
 
     private static void firstLoginMenu() {
-        System.out.println("1. Sign Up For An Account In Infinity Academy");
+        System.out.println("1. Register An Account In Infinity Academy");
         System.out.println("2. Log In To Infinity Academy");
         System.out.println("3. About Infinity Academy");
         System.out.println("4. Meet The Team");
