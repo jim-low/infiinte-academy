@@ -84,34 +84,7 @@ public class Academy {
                 Registration.performRegistration();
                 break;
             case 2:
-                String accountType = Registration.promptAccountType();
-
-                System.out.print("Enter your name: ");
-                String name = scan.nextLine();
-
-                System.out.print("Enter your password: ");
-                String password = new String(System.console().readPassword());
-
-                if (accountType.equals("Student")) {
-                    loggedInStudent = Student.search(name);
-                    if (loggedInStudent == null) {
-                        System.out.printf("Could not find student with name '%s' in our database.\n", name);
-                        loginFlag = LoginFlags.NO_LOGIN;
-                    }
-                    else {
-                        loginFlag = LoginFlags.STUDENT_LOGIN;
-                    }
-                }
-                else if (accountType.equals("Instructor")) {
-                    loggedInInstructor = Instructor.search(name);
-                    if (loggedInInstructor == null) {
-                        System.out.printf("Could not find instructor with name '%s' in our database.\n", name);
-                        loginFlag = LoginFlags.NO_LOGIN;
-                    }
-                    else {
-                        loginFlag = LoginFlags.INSTRUCTOR_LOGIN;
-                    }
-                }
+                logIn();
                 break;
             case 3:
                 System.out.println("Infinity Academy is an academy where you learn infinite things");
@@ -121,6 +94,49 @@ public class Academy {
                 System.out.println("# shame less self sponser");
                 break;
         }
+    }
+
+    private static void logIn() {
+        String accountType = Registration.promptAccountType();
+        String[] credentials = promptAccountCredentials();
+
+        if (accountType.equals("Student")) {
+            loginStudent(credentials);
+        }
+        else if (accountType.equals("Instructor")) {
+            loginInstructor(credentials);
+        }
+    }
+
+    private static void loginInstructor(String[] credentials) {
+        loggedInInstructor = Instructor.search(credentials[0], credentials[1]);
+        if (loggedInInstructor == null) {
+            System.out.printf("Could not find instructor with name '%s' in our database.\n", credentials[0]);
+            loginFlag = LoginFlags.NO_LOGIN;
+        }
+        else {
+            loginFlag = LoginFlags.INSTRUCTOR_LOGIN;
+        }
+    }
+
+    private static void loginStudent(String[] credentials) {
+        loggedInStudent = Student.search(credentials[0], credentials[1]);
+        if (loggedInStudent == null) {
+            System.out.printf("Could not find student with name '%s' in our database.\n", credentials[0]);
+            loginFlag = LoginFlags.NO_LOGIN;
+        }
+        else {
+            loginFlag = LoginFlags.STUDENT_LOGIN;
+        }
+    }
+
+    private static String[] promptAccountCredentials() {
+        System.out.print("Enter your name: ");
+        String name = scan.nextLine();
+
+        System.out.print("Enter your password: ");
+        String password = new String(System.console().readPassword());
+        return new String[]{ name, password };
     }
 
     private static void showAcademyBanner() {
