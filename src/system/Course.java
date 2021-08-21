@@ -11,7 +11,7 @@ public class Course {
     public Course(String courseName, String FIELD_OF_STUDY) {
         this(courseName, 0.0, FIELD_OF_STUDY);
     }
-    
+
     public Course(double courseFee, String FIELD_OF_STUDY) {
         this("", courseFee, FIELD_OF_STUDY);
     }

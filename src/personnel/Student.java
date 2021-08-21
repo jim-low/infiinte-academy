@@ -11,17 +11,17 @@ public class Student extends Person implements Reservation {
     private static ArrayList<Student> studentList = new ArrayList<>();
     private int studentID;
     private static int nextStudentID = 1;
-    
+
     public Student(Person person, int studentID){
         super(person);
         this.studentID = nextStudentID;
         ++nextStudentID;
     }
-    
+
     public void enrollCourse(Course course){
         enrolledCourses.add(course);
     }
-    
+
     public void listCourse(){
         System.out.print("          COURSE LIST           ");
         System.out.print("--------------------------------");
@@ -31,7 +31,7 @@ public class Student extends Person implements Reservation {
             }
             System.out.print("--------------------------------");
         }
-  
+
     public void changeCourse(String courseName){
         for(int i=0; i < enrolledCourses.size(); i++){
             if(enrolledCourses.get(i).getCourseName().equals(courseName)){
@@ -41,7 +41,7 @@ public class Student extends Person implements Reservation {
             }
         }
     }
-    
+
     public void dropCourse(String courseName){
         //call 2 methods in one line, course der getCourseName and euqals
         for(int i=0; i < enrolledCourses.size(); i++){
@@ -61,16 +61,16 @@ public class Student extends Person implements Reservation {
         }
         return found;
     }
-    
+
     @Override
     public String toString(){
         return super.toString() + String.format("Student ID : %s \n", studentID);
     }
-    
+
     public void addReservation(Session session){
         reservedClasses.add(session);
     }
-    
+
     @Override
     public void listReservation(){
         //list session array
@@ -82,11 +82,11 @@ public class Student extends Person implements Reservation {
             }
             System.out.print("--------------------------------");
     }
-    
+
     public void editReservation(int index, Session session){
         reservedClasses.set(index, session);
     }
-    
+
     public void removeReservation(Session session){
         reservedClasses.remove(session);
     }

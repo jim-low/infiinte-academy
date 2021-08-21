@@ -9,19 +9,19 @@ public class Instructor extends Person implements Reservation {
     private ArrayList<String> qualifications = new ArrayList<>();
     private Course course;
     private ArrayList<Session> classes = new ArrayList<>();
-    private static ArrayList<Instructor> instructorList = new ArrayList<>(); 
+    private static ArrayList<Instructor> instructorList = new ArrayList<>();
     private int instructorID;
     private static int nextInstructorID = 1;
     private boolean choice;
-    
+
     public Instructor(Person person, Course course){
         this(person,"",course);
     }
-    
+
     public Instructor(Person person, String instructorID){
         this(person, instructorID, null);
     }
-    
+
     public Instructor(Person person, String instructorID, Course course){
         super(person);
         this.instructorID = nextInstructorID;
@@ -31,7 +31,7 @@ public class Instructor extends Person implements Reservation {
     public void addQualification(String qualification){
         qualifications.add(qualification);
     }
-    
+
     public void editQualification(String qualification){
         for(int i=0; i < qualifications.size(); i++){
             if(qualifications.get(i).equals(qualification)){
@@ -41,18 +41,18 @@ public class Instructor extends Person implements Reservation {
             }
         }
     }
-    
+
     public void listQualification(){
         System.out.print("Your Qualifications :");
         for (int i = 0; i < qualifications.size(); i++) {
             System.out.println(qualifications.get(i));
         }
     }
-    
+
     public void removeQualification(String qualification){
-        qualifications.remove(qualification);   
+        qualifications.remove(qualification);
     }
-    
+
     public static Instructor search(String name){
         Instructor found = null;
         for (Instructor instructor : instructorList) {
@@ -63,11 +63,11 @@ public class Instructor extends Person implements Reservation {
         }
         return found;
     }
-    
+
     public String toString(){
         return super.toString() + String.format("Instructor ID : %7d \n", instructorID);
     }
-    
+
     public Course getCourse() {
         return course;
     }
@@ -76,21 +76,21 @@ public class Instructor extends Person implements Reservation {
         this.course = course;
     }
 
-    
+
     public static void add(Instructor instructor){
         instructorList.add(instructor);
     }
-    
+
     public static void remove(Instructor instructor){
         instructorList.remove(instructor);
-    }   
-    
+    }
+
     @Override
     public void addReservation(Session session){
         classes.add(session);
-        
+
     }
-    
+
     @Override
     public void listReservation(){
         System.out.print("          RESERVATION LIST           ");
@@ -101,15 +101,15 @@ public class Instructor extends Person implements Reservation {
             }
         System.out.print("-------------------------------------");
     }
-    
+
     @Override
     public void editReservation(int index, Session session){
         classes.set(index, session);
     }
-    
+
     @Override
     public void removeReservation(Session session){
         classes.remove(session);
-    } 
+    }
 }
 
