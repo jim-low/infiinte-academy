@@ -84,7 +84,34 @@ public class Academy {
                 Registration.performRegistration();
                 break;
             case 2:
-                System.out.println("Performing login, yup you are logged in");
+                String accountType = Registration.promptAccountType();
+
+                System.out.print("Enter your name: ");
+                String name = scan.nextLine();
+
+                System.out.print("Enter your password: ");
+                String password = new String(System.console().readPassword());
+
+                if (accountType.equals("Student")) {
+                    loggedInStudent = Student.search(name);
+                    if (loggedInStudent == null) {
+                        System.out.printf("Could not find student with name '%s' in our database.\n", name);
+                        loginFlag = LoginFlags.NO_LOGIN;
+                    }
+                    else {
+                        loginFlag = LoginFlags.STUDENT_LOGIN;
+                    }
+                }
+                else if (accountType.equals("Instructor")) {
+                    loggedInInstructor = Instructor.search(name);
+                    if (loggedInInstructor == null) {
+                        System.out.printf("Could not find instructor with name '%s' in our database.\n", name);
+                        loginFlag = LoginFlags.NO_LOGIN;
+                    }
+                    else {
+                        loginFlag = LoginFlags.INSTRUCTOR_LOGIN;
+                    }
+                }
                 break;
             case 3:
                 System.out.println("Infinity Academy is an academy where you learn infinite things");
