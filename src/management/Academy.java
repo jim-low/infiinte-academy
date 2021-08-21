@@ -7,9 +7,8 @@ import personnel.Student;
 
 interface LoginFlags {
     final static int NO_LOGIN = 0;
-    final static int ADMIN_LOGIN = 1;
-    final static int STUDENT_LOGIN = 2;
-    final static int INSTRUCTOR_LOGIN = 3;
+    final static int STUDENT_LOGIN = 1;
+    final static int INSTRUCTOR_LOGIN = 2;
 }
 
 interface Menu {
