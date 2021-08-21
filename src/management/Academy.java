@@ -12,6 +12,29 @@ interface LoginFlags {
     final static int INSTRUCTOR_LOGIN = 3;
 }
 
+interface Menu {
+    static void mainMenu() {
+        System.out.println("1. Register An Account In Infinity Academy");
+        System.out.println("2. Log In To Infinity Academy");
+        System.out.println("3. About Infinity Academy");
+        System.out.println("4. Meet The Team");
+    }
+
+    static void instructorMenu() {
+        System.out.println("1. Reserve a class session");
+        System.out.println("2. List reserved sessions");
+        System.out.println("3. Change reserved session information");
+        System.out.println("4. Remove session");
+    }
+
+    static void studentMenu() {
+        System.out.println("1. Reserve an instructor's class");
+        System.out.println("2. List reserved classes");
+        System.out.println("3. Change class");
+        System.out.println("4. Remove class");
+    }
+}
+
 public class Academy {
     private static Student loggedInStudent = null;
     private static Instructor loggedInInstructor = null;
@@ -33,16 +56,9 @@ public class Academy {
     private static void showMenu() {
         switch (loginFlag) {
             case LoginFlags.NO_LOGIN:
-                firstLoginMenu();
+                Menu.mainMenu();
                 break;
         }
-    }
-
-    private static void firstLoginMenu() {
-        System.out.println("1. Register An Account In Infinity Academy");
-        System.out.println("2. Log In To Infinity Academy");
-        System.out.println("3. About Infinity Academy");
-        System.out.println("4. Meet The Team");
     }
 
     private static void parseChoice() {
