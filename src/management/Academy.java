@@ -75,7 +75,19 @@ public class Academy {
             case LoginFlags.NO_LOGIN:
                 parseFirstTimeLogin();
                 break;
+            case LoginFlags.INSTRUCTOR_LOGIN:
+                parseInstructorChoice();
+                break;
+            case LoginFlags.STUDENT_LOGIN:
+                parseStudentChoice();
+                break;
         }
+    }
+
+    private static void parseInstructorChoice() {
+    }
+
+    private static void parseStudentChoice() {
     }
 
     private static void parseFirstTimeLogin() {
