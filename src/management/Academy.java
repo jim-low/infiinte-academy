@@ -58,6 +58,12 @@ public class Academy {
             case LoginFlags.NO_LOGIN:
                 Menu.mainMenu();
                 break;
+            case LoginFlags.INSTRUCTOR_LOGIN:
+                Menu.instructorMenu();
+                break;
+            case LoginFlags.STUDENT_LOGIN:
+                Menu.studentMenu();
+                break;
         }
     }
 
