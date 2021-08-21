@@ -5,7 +5,7 @@ import java.util.Scanner;
 import personnel.Instructor;
 import personnel.Student;
 
-interface Flags {
+interface LoginFlags {
     final int NO_LOGIN = 0;
     final int ADMIN_LOGIN = 1;
     final int STUDENT_LOGIN = 2;
@@ -15,7 +15,7 @@ interface Flags {
 public class Academy {
     private static Student loggedInStudent = null;
     private static Instructor loggedInInstructor = null;
-    private static Flags flags;
+    private static int loginFlag;
 
     public static Scanner scan = new Scanner(System.in);
 
