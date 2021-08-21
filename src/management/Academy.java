@@ -6,16 +6,16 @@ import personnel.Instructor;
 import personnel.Student;
 
 interface LoginFlags {
-    final int NO_LOGIN = 0;
-    final int ADMIN_LOGIN = 1;
-    final int STUDENT_LOGIN = 2;
-    final int INSTRUCTOR_LOGIN = 3;
+    final static int NO_LOGIN = 0;
+    final static int ADMIN_LOGIN = 1;
+    final static int STUDENT_LOGIN = 2;
+    final static int INSTRUCTOR_LOGIN = 3;
 }
 
 public class Academy {
     private static Student loggedInStudent = null;
     private static Instructor loggedInInstructor = null;
-    private static int loginFlag;
+    private static int loginFlag = LoginFlags.NO_LOGIN;
 
     public static Scanner scan = new Scanner(System.in);
 
