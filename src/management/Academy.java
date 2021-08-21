@@ -16,6 +16,7 @@ public class Academy {
     private static Student loggedInStudent = null;
     private static Instructor loggedInInstructor = null;
     private static int loginFlag = LoginFlags.NO_LOGIN;
+    private static int choice;
 
     public static Scanner scan = new Scanner(System.in);
 
@@ -23,16 +24,36 @@ public class Academy {
         showMenu();
         System.out.println();
         System.out.print("Your Choice: ");
-        parseChoice(scan.nextInt());
+        choice = scan.nextInt();
+        parseChoice();
         System.out.println();
     }
 
-    private static void parseChoice(int choice) {
-        if (loggedInStudent == null && loggedInInstructor == null)
-            parseFirstTimeLogin(choice);
+    private static void showMenu() {
+        showAcademyBanner();
+        switch (loginFlag) {
+            case LoginFlags.NO_LOGIN:
+                firstLoginMenu();
+                break;
+        }
     }
 
-    private static void parseFirstTimeLogin(int choice) {
+    private static void firstLoginMenu() {
+        System.out.println("1. Sign Up For An Account In Infinity Academy");
+        System.out.println("2. Log In To Infinity Academy");
+        System.out.println("3. About Infinity Academy");
+        System.out.println("4. Meet The Team");
+    }
+
+    private static void parseChoice() {
+        switch (loginFlag) {
+            case LoginFlags.NO_LOGIN:
+                parseFirstTimeLogin();
+                break;
+        }
+    }
+
+    private static void parseFirstTimeLogin() {
         switch (choice) {
             case 1:
                 Registration.performRegistration();
@@ -48,19 +69,6 @@ public class Academy {
                 System.out.println("# shame less self sponser");
                 break;
         }
-    }
-
-    private static void showMenu() {
-        showAcademyBanner();
-        if (loggedInStudent == null && loggedInInstructor == null)
-            firstLoginMenu();
-    }
-
-    private static void firstLoginMenu() {
-        System.out.println("1. Sign Up For An Account In Infinity Academy");
-        System.out.println("2. Log In To Infinity Academy");
-        System.out.println("3. About Infinity Academy");
-        System.out.println("4. Meet The Team");
     }
 
     private static void showAcademyBanner() {
