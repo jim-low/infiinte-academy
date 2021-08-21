@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import personnel.Instructor;
 import personnel.Student;
+import system.Course;
+import system.Slot;
 
 interface LoginFlags {
     final static int NO_LOGIN = 0;
@@ -84,6 +86,19 @@ public class Academy {
     }
 
     private static void parseInstructorChoice() {
+        switch (choice) {
+            case 1:
+                Slot.listSlots();
+                System.out.print("Enter your preferred slot: ");
+                Slot selectedSlot = Slot.search(scan.nextInt());
+
+                Course.listCourses();
+                System.out.print("Enter your desired course: ");
+                Course selectedCourse = Course.search(scan.nextInt());
+
+                loggedInInstructor.addReservation(new Session(selectedSlot, selectedCourse, loggedInInstructor));
+                break;
+        }
     }
 
     private static void parseStudentChoice() {
