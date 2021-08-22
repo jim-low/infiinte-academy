@@ -68,4 +68,13 @@ public class Slot {
     public void setEndTime(Calendar endTime) {
         this.endTime = endTime;
     }
+<<<<<<< HEAD
 }
+=======
+
+    public String toString(){
+        return String.format("%s\t%s", this.getStartTime(), this.getEndTime());
+    }
+}
+
+>>>>>>> main

@@ -54,10 +54,11 @@ public class Session {
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
-    
+
     public String toString(){
         return "Slot: " + this.slot.toString() + "\n" + 
                "Course Name: " + this.course.getCourseName() + "\n" +
                "Instructor name: " + this.instructor.getName();
     }
 }
+

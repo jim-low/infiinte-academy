@@ -1,9 +1,11 @@
 package management;
 
+import system.Session;
+
 public interface Reservation {
-    public void addReservation();
+    public void addReservation(Session session);
     public void listReservation();
-    public void editReservation();
-    public void removeReservation();
+    public void editReservation(int index, Session session);
+    public void removeReservation(Session session);
 }
 

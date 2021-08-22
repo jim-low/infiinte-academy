@@ -29,11 +29,11 @@ public class Course {
         new Course("Economics", 300.0, FIELD_OF_STUDY.BUSINESS),
         new Course("Business Management/Administration", 300.0, FIELD_OF_STUDY.BUSINESS)
     };
-    
+
     public Course(String courseName, FIELD_OF_STUDY fieldOfStudy) {
         this(courseName, 0.0, fieldOfStudy);
     }
-    
+
     public Course(double courseFee, FIELD_OF_STUDY fieldOfStudy) {
         this("", courseFee, fieldOfStudy);
     }
@@ -44,7 +44,7 @@ public class Course {
         this.STUDY_FIELD = fieldOfStudy;
         this.studentCount = 0;
     }
-    
+
     public static void listCourses(){
         System.out.println("\tCourse Name\t\tCourse Fee(RM)\tStudent Count");
         System.out.println("\t===========\t\t==============\t=============");
@@ -53,19 +53,19 @@ public class Course {
             System.out.printf("%d.\t%s\t\t%.2f\t%d/%d\n", i + 1, currCourse.courseName, currCourse.courseFee, currCourse.studentCount, Course.MAX_STUDENTS);
         }
     }
-    
+
     public void incStudentCount(){
         ++this.studentCount;
     }
-    
+
     public static Course search(int index){
         if(index < 0 || index >= AVAILABLE_COURSES.length){
             return null;
         }
-        
+
         return AVAILABLE_COURSES[index];
     }
-    
+
     public String toString(){
         return "Course Name: " + this.courseName + "\n" +
                "Course Fee: RM" + this.courseFee + "\n" +
@@ -79,7 +79,7 @@ public class Course {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
-    
+
     public String getFieldOfStudy() {
         return STUDY_FIELD.toString();
     }
@@ -92,3 +92,4 @@ public class Course {
         this.courseFee = courseFee;
     }
 }
+
