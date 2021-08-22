@@ -31,7 +31,8 @@ public class Slot {
     }
     
     public static void listSlots(){
-        System.out.println("\tStart Time\tEnd Time\n");
+        System.out.println("\tStart Time\tEnd Time");
+        System.out.println("\t==========\t========");
         for (int i = 0; i < AVAILABLE_SLOTS.length; i++) {
             Slot slot = AVAILABLE_SLOTS[i];
             System.out.printf("%d.\t%s\n", i+1, slot.toString());

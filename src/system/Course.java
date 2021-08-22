@@ -46,11 +46,16 @@ public class Course {
     }
     
     public static void listCourses(){
-        System.out.println("\tCourse Name\t\tCourse Fee(RM)\tStudent Count\n");
+        System.out.println("\tCourse Name\t\tCourse Fee(RM)\tStudent Count");
+        System.out.println("\t===========\t\t==============\t=============");
         for (int i = 0; i < AVAILABLE_COURSES.length; i++) {
             Course currCourse = AVAILABLE_COURSES[i];
-            System.out.printf("%d.\t%s\t\t%.2f\t%d/%d\n", i+1, currCourse.courseName, currCourse.courseFee, currCourse.studentCount, Course.MAX_STUDENTS);
+            System.out.printf("%d.\t%s\t\t%.2f\t%d/%d\n", i + 1, currCourse.courseName, currCourse.courseFee, currCourse.studentCount, Course.MAX_STUDENTS);
         }
+    }
+    
+    public void incStudentCount(){
+        ++this.studentCount;
     }
     
     public static Course search(int index){
@@ -62,7 +67,9 @@ public class Course {
     }
     
     public String toString(){
-        return String.format("%-20s RM%-10s %-20s\n", courseName, courseFee, STUDY_FIELD);
+        return "Course Name: " + this.courseName + "\n" +
+               "Course Fee: RM" + this.courseFee + "\n" +
+               "Student Count: " + this.studentCount + "/" + MAX_STUDENTS;
     }
 
     public String getCourseName() {
