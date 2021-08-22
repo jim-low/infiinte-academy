@@ -89,14 +89,17 @@ public class Academy {
     private static void parseInstructorChoice() {
         switch (choice) {
             case 1:
-                Session session = Session.createSession();
-                addInstructorSession(session);
+                Session createdSession = Session.createSession(loggedInInstructor);
+                loggedInInstructor.addReservation(createdSession);
                 break;
             case 2:
                 loggedInInstructor.listReservation();
                 break;
             case 3:
-                // a bit mafan to implement, imma skip this for now
+                // 1. get index
+                // 2. confirm object at index
+                // 3. create new session
+                // 4. set new session
                 break;
             case 4:
                 Session selectedSession = promptSession();
@@ -119,24 +122,23 @@ public class Academy {
         return confirm;
     }
 
-    private static Session promptSession() {
-        loggedInInstructor.listReservation();
+    private static <T> Session promptSession(Object person, Class<T> type) {
+        Student student = null;
+        Instructor instructor = null;
+
+        if (type.equals(Student.class)) {
+            student = ((Student)person);
+            student.listReservation();
+        }
+        else {
+            instructor = ((Instructor)person);
+            instructor.listReservation();
+        }
+
         System.out.print("Enter the Session to remove(0 to abort): ");
         int selection = scan.nextInt();
-        return loggedInInstructor.getReservation(selection - 1);
-    }
 
-    // this is to be stolen, i mean borrowed by Zi Yu
-    private static void addInstructorSession() {
-        Slot.listSlots();
-        System.out.print("Enter your preferred slot: ");
-        Slot selectedSlot = Slot.search(scan.nextInt());
-
-        Course.listCourses();
-        System.out.print("Enter your desired course: ");
-        Course selectedCourse = Course.search(scan.nextInt());
-
-        loggedInInstructor.addReservation(new Session(selectedSlot, selectedCourse, loggedInInstructor));
+        return student == null ? instructor.getReservation(selection - 1) : student.getReservation(selection - 1);
     }
 
     private static void parseStudentChoice() {
