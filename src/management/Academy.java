@@ -99,18 +99,31 @@ public class Academy {
                 // a bit mafan to implement, imma skip this for now
                 break;
             case 4:
-                loggedInInstructor.listReservation();
-                System.out.print("Enter the Session to remove(0 to abort): ");
-                int selection = scan.nextInt();
-                Session selectedSession = loggedInInstructor.getReservation(selection - 1);
-                System.out.println(selectedSession.toString());
-                System.out.print("Confirm removal of this Session? ");
-                char confirm = scan.next().charAt(0);
-                if (confirm == 'y') {
+                Session selectedSession = promptSession();
+                char confirmation = confirmRemoval(selectedSession);
+
+                if (confirmation == 'y') {
                     loggedInInstructor.removeReservation(selectedSession);
+                }
+                else {
+                    System.out.println("Session Removal Aborted");
                 }
                 break;
         }
+    }
+
+    private static char confirmRemoval(Session selectedSession) {
+        System.out.println(selectedSession.toString());
+        System.out.print("Confirm removal of this Session? ");
+        char confirm = scan.next().charAt(0);
+        return confirm;
+    }
+
+    private static Session promptSession() {
+        loggedInInstructor.listReservation();
+        System.out.print("Enter the Session to remove(0 to abort): ");
+        int selection = scan.nextInt();
+        return loggedInInstructor.getReservation(selection - 1);
     }
 
     // this is to be stolen, i mean borrowed by Zi Yu
