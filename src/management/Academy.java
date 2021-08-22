@@ -5,6 +5,7 @@ import java.util.Scanner;
 import personnel.Instructor;
 import personnel.Student;
 import system.Course;
+import system.Session;
 import system.Slot;
 
 interface LoginFlags {
@@ -88,17 +89,41 @@ public class Academy {
     private static void parseInstructorChoice() {
         switch (choice) {
             case 1:
-                Slot.listSlots();
-                System.out.print("Enter your preferred slot: ");
-                Slot selectedSlot = Slot.search(scan.nextInt());
-
-                Course.listCourses();
-                System.out.print("Enter your desired course: ");
-                Course selectedCourse = Course.search(scan.nextInt());
-
-                loggedInInstructor.addReservation(new Session(selectedSlot, selectedCourse, loggedInInstructor));
+                Session session = Session.createSession();
+                addInstructorSession(session);
+                break;
+            case 2:
+                loggedInInstructor.listReservation();
+                break;
+            case 3:
+                // a bit mafan to implement, imma skip this for now
+                break;
+            case 4:
+                loggedInInstructor.listReservation();
+                System.out.print("Enter the Session to remove(0 to abort): ");
+                int selection = scan.nextInt();
+                Session selectedSession = loggedInInstructor.getReservation(selection - 1);
+                System.out.println(selectedSession.toString());
+                System.out.print("Confirm removal of this Session? ");
+                char confirm = scan.next().charAt(0);
+                if (confirm == 'y') {
+                    loggedInInstructor.removeReservation(selectedSession);
+                }
                 break;
         }
+    }
+
+    // this is to be stolen, i mean borrowed by Zi Yu
+    private static void addInstructorSession() {
+        Slot.listSlots();
+        System.out.print("Enter your preferred slot: ");
+        Slot selectedSlot = Slot.search(scan.nextInt());
+
+        Course.listCourses();
+        System.out.print("Enter your desired course: ");
+        Course selectedCourse = Course.search(scan.nextInt());
+
+        loggedInInstructor.addReservation(new Session(selectedSlot, selectedCourse, loggedInInstructor));
     }
 
     private static void parseStudentChoice() {
