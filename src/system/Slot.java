@@ -17,19 +17,19 @@ public class Slot {
         new Slot(setupTimeSlot(16, 00), setupTimeSlot(17, 30)),
         new Slot(setupTimeSlot(16, 00), setupTimeSlot(17, 00))
     };
-    
+
     public Slot(Calendar startTime, Calendar endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
-    
+
     private static Calendar setupTimeSlot(int hours, int minutes){
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR, hours);
         c.set(Calendar.MINUTE, minutes);
         return c;
     }
-    
+
     public static void listSlots(){
         System.out.println("\tStart Time\tEnd Time");
         System.out.println("\t==========\t========");
@@ -38,15 +38,15 @@ public class Slot {
             System.out.printf("%d.\t%s\n", i+1, slot.toString());
         }
     }
-    
+
     public static Slot search(int index){
         if(index < 0 || index >= AVAILABLE_SLOTS.length){
             return null;
         }
-        
+
         return AVAILABLE_SLOTS[index];
     }
-    
+
     public String toString(){
         return String.format("%s\t%s\n", this.getStartTime(), this.getEndTime());
     }
@@ -68,13 +68,5 @@ public class Slot {
     public void setEndTime(Calendar endTime) {
         this.endTime = endTime;
     }
-<<<<<<< HEAD
-}
-=======
-
-    public String toString(){
-        return String.format("%s\t%s", this.getStartTime(), this.getEndTime());
-    }
 }
 
->>>>>>> main
