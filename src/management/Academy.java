@@ -3,6 +3,7 @@ package management;
 import java.util.Scanner;
 
 import personnel.Instructor;
+import personnel.Person;
 import personnel.Student;
 import system.Course;
 import system.Session;
@@ -167,42 +168,29 @@ public class Academy {
         String[] credentials = promptAccountCredentials();
 
         if (accountType.equals("Student")) {
-            loginStudent(credentials);
+            loggedInStudent = Person.search(credentials[0], credentials[1], Student.class);
+            loginFlag = loggedInStudent != null ? LoginFlags.STUDENT_LOGIN : LoginFlags.NO_LOGIN;
         }
         else if (accountType.equals("Instructor")) {
-            loginInstructor(credentials);
+            loggedInInstructor = Person.search(credentials[0], credentials[1], Student.class);
+            loginFlag = loggedInInstructor != null ? LoginFlags.INSTRUCTOR_LOGIN : LoginFlags.NO_LOGIN;
         }
-    }
 
-    private static void loginInstructor(String[] credentials) {
-        loggedInInstructor = Instructor.search(credentials[0], credentials[1]);
-        if (loggedInInstructor == null) {
-            System.out.printf("Could not find instructor with name '%s' in our database.\n", credentials[0]);
-            loginFlag = LoginFlags.NO_LOGIN;
+        if (loginFlag == LoginFlags.NO_LOGIN) {
+            System.out.printf("Could not find registration with name '%s' in our database.\n", credentials[0]);
+            return;
         }
-        else {
-            loginFlag = LoginFlags.INSTRUCTOR_LOGIN;
-        }
-    }
 
-    private static void loginStudent(String[] credentials) {
-        loggedInStudent = Student.search(credentials[0], credentials[1]);
-        if (loggedInStudent == null) {
-            System.out.printf("Could not find student with name '%s' in our database.\n", credentials[0]);
-            loginFlag = LoginFlags.NO_LOGIN;
-        }
-        else {
-            loginFlag = LoginFlags.STUDENT_LOGIN;
-        }
+        System.out.println("Successfully logged in!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
     private static String[] promptAccountCredentials() {
-        System.out.print("Enter your name: ");
-        String name = scan.nextLine();
+        System.out.print("Enter your email: ");
+        String email = scan.nextLine();
 
         System.out.print("Enter your password: ");
         String password = new String(System.console().readPassword());
-        return new String[]{ name, password };
+        return new String[]{ email, password };
     }
 
     private static void showAcademyBanner() {
