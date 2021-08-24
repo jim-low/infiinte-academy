@@ -8,7 +8,23 @@ import java.util.regex.Pattern;
 import management.Academy;
 
 public interface Payment {
-    public static boolean performPayment(String type, double amount) {
+    public static <T> boolean performPayment(Card card, Class<T> type, double amount) {
+
+        if (type.equals(Course.class)) {
+            String transcode = TransactionCode.CRE.toString();
+            int nextID = 1000;
+            Transaction.setNextTransactionID(transcode + nextID);
+        } else if (type.equals(Student.class)) {
+            String transcode = TransactionCode.STD.toString();
+            int nextID = 1000;
+            Transaction.setNextTransactionID(transcode + nextID);
+        }
+        if (type.equals(Instructor.class)) {
+            String transcode = TransactionCode.INS.toString();
+            int nextID = 1000;
+            Transaction.setNextTransactionID(transcode + nextID);
+        }
+        
         paymentInterface();
         String accountNo = inputAccountNo();
         int intNo = inputcvcNo();
@@ -26,26 +42,27 @@ public interface Payment {
 
     public static String inputAccountNo() {
         String accountNo, tempStr;
+        boolean validated;
         do {
             System.out.printf("\n\nPlease enter your account number [xxxx-xxx-xxxx] : ");
             accountNo = Academy.scan.next();
             System.out.printf("\nPlease comfirm your accountNo : ");
             tempStr = Academy.scan.next();
-        } while (!(accountNo.equals(tempStr))
-                || (accountNo.length() != 13)
-                || (!(Pattern.matches("\\d{4}-{1}\\d{3}-{1}\\d{4}", accountNo))));
+            validated = Card.validateAccount(accountNo, tempStr);
+        } while (!validated);
         return accountNo;
     }
 
-    public static int inputcvcNo() {
+        public static int inputcvcNo() {
         int cvcNo, tempNo;
+        boolean validated;
         do {
             System.out.printf("\n\nPlease enter your cvcNo [xxx] : ");
             cvcNo = Academy.scan.nextInt();
             System.out.printf("\nPlease comfirm your cvcNo : ");
             tempNo = Academy.scan.nextInt();
-        } while ((cvcNo != tempNo) || !(cvcNo >= 100 && cvcNo <= 999));
-        TimeDelay();
+            validated= Card.validateCvcNo(cvcNo,tempNo);
+        } while (!validated);
         System.out.println("\nThank you for your cvcNo comfirmation\n");
         return cvcNo;
     }
