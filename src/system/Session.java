@@ -1,5 +1,6 @@
 package system;
 
+import management.Academy;
 import personnel.*;
 
 public class Session {
@@ -12,6 +13,22 @@ public class Session {
         this.slot = slot;
         this.course = course;
         this.instructor = instructor;
+    }
+    
+    public static Session createSession(Instructor instructor){
+        Slot.listSlots();
+        System.out.println();
+        System.out.print("Enter your preferred slot: ");
+        int slotSelection = Academy.scan.nextInt();
+        Slot selectedSlot = Slot.search(slotSelection - 1);
+        
+        Course.listCourses();
+        System.out.println();
+        System.out.print("Enter your desired course: ");
+        int courseSelection = Academy.scan.nextInt();
+        Course selectedCourse = Course.search(courseSelection);
+        
+        return new Session(selectedSlot, selectedCourse, instructor);
     }
 
     public Slot getSlot() {
@@ -39,7 +56,9 @@ public class Session {
     }
 
     public String toString(){
-        return String.format("%-10s %-10s %-10s\n", slot, course, instructor);
+        return "Slot: " + this.slot.toString() + "\n" + 
+               "Course Name: " + this.course.getCourseName() + "\n" +
+               "Instructor name: " + this.instructor.getName();
     }
 }
 
