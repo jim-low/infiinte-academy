@@ -102,7 +102,7 @@ public class Academy {
                 // 4. set new session
                 break;
             case 4:
-                Session selectedSession = promptSession();
+                Session selectedSession = promptSession(loggedInInstructor, Instructor.class);
                 char confirmation = confirmRemoval(selectedSession);
 
                 if (confirmation == 'y') {
