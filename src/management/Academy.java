@@ -143,6 +143,22 @@ public class Academy {
     }
 
     private static void parseStudentChoice() {
+        switch (choice) {
+            case 1:
+                Session.listReservedSessions();
+                System.out.println("Select your preferred session: ");
+                int selection = scan.nextInt();
+                Session selectedSession = Session.getReservedSession(selection - 1);
+                System.out.println(selectedSession.toString());
+                char confirmation = confirmRemoval(selectedSession);
+                if (confirmation == 'y') {
+                    loggedInStudent.addReservation(selectedSession);
+                }
+                else {
+                    System.out.println("Aborted.");
+                }
+                break;
+        }
     }
 
     private static void parseFirstTimeLogin() {
