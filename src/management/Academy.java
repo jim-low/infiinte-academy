@@ -107,11 +107,11 @@ public class Academy {
                 char confirmation = confirmSession(selectedSession);
 
                 if (confirmation == 'y') {
-                    loggedInInstructor.removeReservation(selectedSession);
-                }
-                else {
                     System.out.println("Session Removal Aborted");
+                    return;
                 }
+
+                loggedInInstructor.removeReservation(selectedSession);
                 break;
         }
     }
@@ -148,15 +148,17 @@ public class Academy {
                 Session.listReservedSessions();
                 System.out.println("Select your preferred session: ");
                 int selection = scan.nextInt();
+
                 Session selectedSession = Session.getReservedSession(selection - 1);
                 System.out.println(selectedSession.toString());
                 char confirmation = confirmSession(selectedSession);
-                if (confirmation == 'y') {
-                    loggedInStudent.addReservation(selectedSession);
-                }
-                else {
+
+                if (confirmation != 'y') {
                     System.out.println("Aborted.");
+                    return;
                 }
+
+                loggedInStudent.addReservation(selectedSession);
                 break;
         }
     }
