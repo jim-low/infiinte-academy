@@ -163,6 +163,17 @@ public class Academy {
             case 2:
                 loggedInStudent.listReservation();
                 break;
+            case 4:
+                Session selectedSession = promptSession(loggedInStudent, Student.class);
+                char confirmation = confirmSession(selectedSession);
+
+                if (confirmation == 'y') {
+                    System.out.println("Aborted.");
+                    return;
+                }
+
+                loggedInStudent.removeReservation(selectedSession);
+                break;
         }
     }
 
