@@ -104,7 +104,7 @@ public class Academy {
                 break;
             case 4:
                 Session selectedSession = promptSession(loggedInInstructor, Instructor.class);
-                char confirmation = confirmRemoval(selectedSession);
+                char confirmation = confirmSession(selectedSession);
 
                 if (confirmation == 'y') {
                     loggedInInstructor.removeReservation(selectedSession);
@@ -116,9 +116,9 @@ public class Academy {
         }
     }
 
-    private static char confirmRemoval(Session selectedSession) {
+    private static char confirmSession(Session selectedSession) {
         System.out.println(selectedSession.toString());
-        System.out.print("Confirm removal of this Session? ");
+        System.out.print("Confirm current Session? ");
         char confirm = scan.next().charAt(0);
         return confirm;
     }
@@ -150,7 +150,7 @@ public class Academy {
                 int selection = scan.nextInt();
                 Session selectedSession = Session.getReservedSession(selection - 1);
                 System.out.println(selectedSession.toString());
-                char confirmation = confirmRemoval(selectedSession);
+                char confirmation = confirmSession(selectedSession);
                 if (confirmation == 'y') {
                     loggedInStudent.addReservation(selectedSession);
                 }
