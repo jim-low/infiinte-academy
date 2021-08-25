@@ -160,6 +160,9 @@ public class Academy {
 
                 loggedInStudent.addReservation(selectedSession);
                 break;
+            case 2:
+                loggedInStudent.listReservation();
+                break;
         }
     }
 
