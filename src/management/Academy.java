@@ -100,18 +100,18 @@ public class Academy {
                     return;
                 }
 
-                char editSessionConfirmation = confirmSession(selectedEditSession);
+                boolean editSession = confirmSession(selectedEditSession);
 
-                if (editSessionConfirmation != 'y') {
+                if (!editSession) {
                     System.out.println("Aborted.");
                     return;
                 }
 
                 Session newSession = Session.createSession(loggedInInstructor);
                 System.out.println(newSession.toString());
-                char newSessionConfirmation = confirmSession(newSession);
+                boolean confirmNewSession = confirmSession(newSession);
 
-                if (newSessionConfirmation != 'y') {
+                if (!confirmNewSession) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -120,9 +120,9 @@ public class Academy {
                 break;
             case 4:
                 Session selectedSession = promptSession(Instructor.class);
-                char confirmation = confirmSession(selectedSession);
+                boolean confirmRemoveSession = confirmSession(selectedSession);
 
-                if (confirmation == 'y') {
+                if (!confirmRemoveSession) {
                     System.out.println("Session Removal Aborted");
                     return;
                 }
@@ -132,11 +132,11 @@ public class Academy {
         }
     }
 
-    private static char confirmSession(Session selectedSession) {
+    private static boolean confirmSession(Session selectedSession) {
         System.out.println(selectedSession.toString());
         System.out.print("Confirm current Session? ");
         char confirm = scan.next().charAt(0);
-        return confirm;
+        return confirm == 'y';
     }
 
     private static <T> Session promptSession(Class<T> type) {
@@ -167,9 +167,9 @@ public class Academy {
 
                 Session selectedSession = Session.getReservedSession(selection - 1);
                 System.out.println(selectedSession.toString());
-                char confirmation = confirmSession(selectedSession);
+                boolean confirmSession = confirmSession(selectedSession);
 
-                if (confirmation != 'y') {
+                if (!confirmSession) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -186,9 +186,9 @@ public class Academy {
                     return;
                 }
 
-                char editSessionConfirmation = confirmSession(selectedEditSession);
+                boolean confirmEditSession = confirmSession(selectedEditSession);
 
-                if (editSessionConfirmation != 'y') {
+                if (!confirmEditSession) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -199,9 +199,9 @@ public class Academy {
 
                 Session newSelectedSession = Session.getReservedSession(newSessionSelection - 1);
                 System.out.println(newSelectedSession.toString());
-                char newSessionConfirmation = confirmSession(newSelectedSession);
+                boolean confirmSelectedSession = confirmSession(newSelectedSession);
 
-                if (newSessionConfirmation != 'y') {
+                if (!confirmSelectedSession) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -210,9 +210,9 @@ public class Academy {
                 break;
             case 4:
                 Session selectedSession = promptSession(Student.class);
-                char confirmation = confirmSession(selectedSession);
+                boolean confirmRemoveSession = confirmSession(selectedSession);
 
-                if (confirmation == 'y') {
+                if (!confirmRemoveSession) {
                     System.out.println("Aborted.");
                     return;
                 }
