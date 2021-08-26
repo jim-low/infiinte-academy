@@ -163,6 +163,35 @@ public class Academy {
             case 2:
                 loggedInStudent.listReservation();
                 break;
+            case 3:
+                Session selectedEditSession = promptSession(Student.class);
+                if (selectedEditSession == null) {
+                    System.out.println("Aborted.");
+                    return;
+                }
+
+                char editSessionConfirmation = confirmSession(selectedEditSession);
+
+                if (editSessionConfirmation != 'y') {
+                    System.out.println("Aborted.");
+                    return;
+                }
+
+                Session.listReservedSessions();
+                System.out.println("Select your preferred session: ");
+                int newSessionSelection = scan.nextInt();
+
+                Session newSelectedSession = Session.getReservedSession(newSessionSelection - 1);
+                System.out.println(newSelectedSession.toString());
+                char newSessionConfirmation = confirmSession(newSelectedSession);
+
+                if (newSessionConfirmation != 'y') {
+                    System.out.println("Aborted.");
+                    return;
+                }
+
+                loggedInStudent.editReservation(newSessionSelection, newSelectedSession);
+                break;
             case 4:
                 Session selectedSession = promptSession(Student.class);
                 char confirmation = confirmSession(selectedSession);
