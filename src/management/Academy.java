@@ -2,12 +2,8 @@ package management;
 
 import java.util.Scanner;
 
-import personnel.Instructor;
-import personnel.Person;
-import personnel.Student;
-import system.Course;
-import system.Session;
-import system.Slot;
+import personnel.*;
+import system.*;
 
 interface LoginFlags {
     final static int NO_LOGIN = 0;
