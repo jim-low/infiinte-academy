@@ -97,10 +97,29 @@ public class Academy {
                 loggedInInstructor.listReservation();
                 break;
             case 3:
-                // 1. get index
-                // 2. confirm object at index
-                // 3. create new session
-                // 4. set new session
+                Session selectedEditSession = promptSession(Instructor.class);
+                if (selectedEditSession == null) {
+                    System.out.println("Aborted.");
+                    return;
+                }
+
+                char editSessionConfirmation = confirmSession(selectedEditSession);
+
+                if (editSessionConfirmation != 'y') {
+                    System.out.println("Aborted.");
+                    return;
+                }
+
+                Session newSession = Session.createSession(loggedInInstructor);
+                System.out.println(newSession.toString());
+                char newSessionConfirmation = confirmSession(newSession);
+
+                if (newSessionConfirmation != 'y') {
+                    System.out.println("Aborted.");
+                    return;
+                }
+
+                loggedInInstructor.editReservation(selectedEditSession, newSession);
                 break;
             case 4:
                 Session selectedSession = promptSession(Instructor.class);
