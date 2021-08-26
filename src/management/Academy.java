@@ -103,7 +103,7 @@ public class Academy {
                 // 4. set new session
                 break;
             case 4:
-                Session selectedSession = promptSession(loggedInInstructor, Instructor.class);
+                Session selectedSession = promptSession(Instructor.class);
                 char confirmation = confirmSession(selectedSession);
 
                 if (confirmation == 'y') {
@@ -123,23 +123,23 @@ public class Academy {
         return confirm;
     }
 
-    private static <T> Session promptSession(Object person, Class<T> type) {
+    private static <T> Session promptSession(Class<T> type) {
         Student student = null;
         Instructor instructor = null;
 
         if (type.equals(Student.class)) {
-            student = ((Student)person);
+            student = loggedInStudent;
             student.listReservation();
         }
-        else {
-            instructor = ((Instructor)person);
+        else if (type.equals(Instructor.class)) {
+            instructor = loggedInInstructor;
             instructor.listReservation();
         }
 
-        System.out.print("Enter the Session to remove(0 to abort): ");
+        System.out.print("Enter Session number(0 to abort): ");
         int selection = scan.nextInt();
 
-        return student == null ? instructor.getReservation(selection - 1) : student.getReservation(selection - 1);
+        return student != null ? student.getReservation(selection - 1) : instructor.getReservation(selection - 1);
     }
 
     private static void parseStudentChoice() {
@@ -164,7 +164,7 @@ public class Academy {
                 loggedInStudent.listReservation();
                 break;
             case 4:
-                Session selectedSession = promptSession(loggedInStudent, Student.class);
+                Session selectedSession = promptSession(Student.class);
                 char confirmation = confirmSession(selectedSession);
 
                 if (confirmation == 'y') {
