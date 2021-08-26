@@ -21,20 +21,21 @@ interface Menu {
         System.out.println("2. Log In To Infinity Academy");
         System.out.println("3. About Infinity Academy");
         System.out.println("4. Meet The Team");
+        System.out.println("5. Exit");
     }
 
     static void instructorMenu() {
         System.out.println("1. Reserve a class session");
         System.out.println("2. List reserved sessions");
         System.out.println("3. Change reserved session information");
-        System.out.println("4. Remove session");
+        System.out.println("5. Log Out");
     }
 
     static void studentMenu() {
         System.out.println("1. Reserve an instructor's class");
         System.out.println("2. List reserved classes");
         System.out.println("3. Change class");
-        System.out.println("4. Remove class");
+        System.out.println("5. Log Out");
     }
 }
 
