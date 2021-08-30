@@ -100,10 +100,7 @@ public class Academy {
                 }
 
                 Session newSession = Session.createSession(loggedInInstructor);
-                System.out.println(newSession.toString());
-                boolean confirmNewSession = confirmSession(newSession);
-
-                if (!confirmNewSession) {
+                if (!confirmSession(newSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -130,12 +127,14 @@ public class Academy {
             return null;
         }
 
-        System.out.println(selectedSession.toString());
-        System.out.print("Confirm current Session? ");
-        char confirm = scan.next().charAt(0);
-        System.out.println();
+        return confirmSession(selectedSession) ? selectedSession : null;
+    }
 
-        return confirm == 'y' ? selectedSession : null;
+    private static boolean confirmSession(Session session) {
+        System.out.println(session.toString());
+        System.out.print("Confirm session? ");
+        char confirm = scan.next().charAt(0);
+        return confirm == 'y';
     }
 
     private static <T> Session promptSession(Class<T> type) {
