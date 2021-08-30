@@ -94,16 +94,8 @@ public class Academy {
                 loggedInInstructor.listReservation();
                 break;
             case 3:
-                Session selectedEditSession = promptSession(Instructor.class);
+                Session selectedEditSession = selectEditSession(Instructor.class);
                 if (selectedEditSession == null) {
-                    System.out.println("Aborted.");
-                    return;
-                }
-
-                boolean editSession = confirmSession(selectedEditSession);
-
-                if (!editSession) {
-                    System.out.println("Aborted.");
                     return;
                 }
 
@@ -132,11 +124,18 @@ public class Academy {
         }
     }
 
-    private static boolean confirmSession(Session selectedSession) {
+    private static <T> Session selectEditSession(Class<T> type) {
+        Session electedSession = promptSession(type);
+        if (selectedSession == null) {
+            return null;
+        }
+
         System.out.println(selectedSession.toString());
         System.out.print("Confirm current Session? ");
         char confirm = scan.next().charAt(0);
-        return confirm == 'y';
+        System.out.println();
+
+        return confirm == 'y' ? selectedSession : null;
     }
 
     private static <T> Session promptSession(Class<T> type) {
