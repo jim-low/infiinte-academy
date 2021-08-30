@@ -125,7 +125,7 @@ public class Academy {
     }
 
     private static <T> Session selectEditSession(Class<T> type) {
-        Session electedSession = promptSession(type);
+        Session selectedSession = promptSession(type);
         if (selectedSession == null) {
             return null;
         }
