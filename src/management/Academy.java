@@ -129,6 +129,10 @@ public class Academy {
     }
 
     private static boolean confirmSession(Session session) {
+        if (session == null) {
+            return false;
+        }
+
         System.out.println(session.toString());
         System.out.print("Confirm session? ");
         char confirm = scan.next().charAt(0);
