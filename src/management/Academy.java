@@ -109,9 +109,7 @@ public class Academy {
                 break;
             case 4:
                 Session selectedSession = promptSession(Instructor.class);
-                boolean confirmRemoveSession = confirmSession(selectedSession);
-
-                if (!confirmRemoveSession) {
+                if (!confirmSession(selectedSession)) {
                     System.out.println("Session Removal Aborted");
                     return;
                 }
@@ -159,15 +157,8 @@ public class Academy {
     private static void parseStudentChoice() {
         switch (choice) {
             case 1:
-                Session.listReservedSessions();
-                System.out.println("Select your preferred session: ");
-                int selection = scan.nextInt();
-
-                Session selectedSession = Session.getReservedSession(selection - 1);
-                System.out.println(selectedSession.toString());
-                boolean confirmSession = confirmSession(selectedSession);
-
-                if (!confirmSession) {
+                Session selectedSession = selectReservedSession();
+                if (!confirmSession(selectedSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -179,27 +170,12 @@ public class Academy {
                 break;
             case 3:
                 Session selectedEditSession = promptSession(Student.class);
-                if (selectedEditSession == null) {
-                    System.out.println("Aborted.");
+                if (!confirmSession(selectedEditSession)) {
                     return;
                 }
 
-                boolean confirmEditSession = confirmSession(selectedEditSession);
-
-                if (!confirmEditSession) {
-                    System.out.println("Aborted.");
-                    return;
-                }
-
-                Session.listReservedSessions();
-                System.out.println("Select your preferred session: ");
-                int newSessionSelection = scan.nextInt();
-
-                Session newSelectedSession = Session.getReservedSession(newSessionSelection - 1);
-                System.out.println(newSelectedSession.toString());
-                boolean confirmSelectedSession = confirmSession(newSelectedSession);
-
-                if (!confirmSelectedSession) {
+                Session newSelectedSession = selectReservedSession();
+                if (!confirmSession(newSelectedSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -207,17 +183,22 @@ public class Academy {
                 loggedInStudent.editReservation(newSessionSelection, newSelectedSession);
                 break;
             case 4:
-                Session selectedSession = promptSession(Student.class);
-                boolean confirmRemoveSession = confirmSession(selectedSession);
-
-                if (!confirmRemoveSession) {
+                Session selectedRemoveSession = promptSession(Student.class);
+                if (!confirmSession(selectedRemoveSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
 
-                loggedInStudent.removeReservation(selectedSession);
+                loggedInStudent.removeReservation(selectedRemoveSession);
                 break;
         }
+    }
+
+    private static Session selectReservedSession() {
+        Session.listReservedSessions();
+        System.out.println("Select your preferred session: ");
+        int selection = scan.nextInt();
+        return Session.getReservedSession(selection - 1);
     }
 
     private static void parseFirstTimeLogin() {
