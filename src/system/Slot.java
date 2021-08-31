@@ -30,26 +30,11 @@ public class Slot {
         return c;
     }
 
-    public static Calendar setupTimeSlot(){
-        Calendar c = Calendar.getInstance();
-        c.get(Calendar.HOUR);
-        c.get(Calendar.MINUTE);
-        return c;
-    }
-
     public static Calendar setupDate(int day, int month, int year){
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_MONTH, day);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.YEAR, year);
-        return c;
-    }
-
-    public static Calendar setupDate(){
-        Calendar c = Calendar.getInstance();
-        c.get(Calendar.DAY_OF_MONTH);
-        c.get(Calendar.MONTH);
-        c.get(Calendar.YEAR);
         return c;
     }
 
