@@ -2,12 +2,8 @@ package management;
 
 import java.util.Scanner;
 
-import personnel.Instructor;
-import personnel.Person;
-import personnel.Student;
-import system.Course;
-import system.Session;
-import system.Slot;
+import personnel.*;
+import system.*;
 
 interface LoginFlags {
     final static int NO_LOGIN = 0;
@@ -21,6 +17,7 @@ interface Menu {
         System.out.println("2. Log In To Infinity Academy");
         System.out.println("3. About Infinity Academy");
         System.out.println("4. Meet The Team");
+        System.out.println("5. Exit");
     }
 
     static void instructorMenu() {
@@ -28,6 +25,7 @@ interface Menu {
         System.out.println("2. List reserved sessions");
         System.out.println("3. Change reserved session information");
         System.out.println("4. Remove session");
+        System.out.println("5. Log Out");
     }
 
     static void studentMenu() {
@@ -35,6 +33,7 @@ interface Menu {
         System.out.println("2. List reserved classes");
         System.out.println("3. Change class");
         System.out.println("4. Remove class");
+        System.out.println("5. Log Out");
     }
 }
 
@@ -97,24 +96,13 @@ public class Academy {
                 loggedInInstructor.listReservation();
                 break;
             case 3:
-                Session selectedEditSession = promptSession(Instructor.class);
+                Session selectedEditSession = selectEditSession(Instructor.class);
                 if (selectedEditSession == null) {
-                    System.out.println("Aborted.");
-                    return;
-                }
-
-                char editSessionConfirmation = confirmSession(selectedEditSession);
-
-                if (editSessionConfirmation != 'y') {
-                    System.out.println("Aborted.");
                     return;
                 }
 
                 Session newSession = Session.createSession(loggedInInstructor);
-                System.out.println(newSession.toString());
-                char newSessionConfirmation = confirmSession(newSession);
-
-                if (newSessionConfirmation != 'y') {
+                if (!confirmSession(newSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -123,23 +111,37 @@ public class Academy {
                 break;
             case 4:
                 Session selectedSession = promptSession(Instructor.class);
-                char confirmation = confirmSession(selectedSession);
-
-                if (confirmation == 'y') {
+                if (!confirmSession(selectedSession)) {
                     System.out.println("Session Removal Aborted");
                     return;
                 }
 
                 loggedInInstructor.removeReservation(selectedSession);
                 break;
+            case 5:
+                logOut();
+                break;
         }
     }
 
-    private static char confirmSession(Session selectedSession) {
-        System.out.println(selectedSession.toString());
-        System.out.print("Confirm current Session? ");
+    private static <T> Session selectEditSession(Class<T> type) {
+        Session selectedSession = promptSession(type);
+        if (selectedSession == null) {
+            return null;
+        }
+
+        return confirmSession(selectedSession) ? selectedSession : null;
+    }
+
+    private static boolean confirmSession(Session session) {
+        if (session == null) {
+            return false;
+        }
+
+        System.out.println(session.toString());
+        System.out.print("Confirm session? ");
         char confirm = scan.next().charAt(0);
-        return confirm;
+        return confirm == 'y';
     }
 
     private static <T> Session promptSession(Class<T> type) {
@@ -164,15 +166,8 @@ public class Academy {
     private static void parseStudentChoice() {
         switch (choice) {
             case 1:
-                Session.listReservedSessions();
-                System.out.println("Select your preferred session: ");
-                int selection = scan.nextInt();
-
-                Session selectedSession = Session.getReservedSession(selection - 1);
-                System.out.println(selectedSession.toString());
-                char confirmation = confirmSession(selectedSession);
-
-                if (confirmation != 'y') {
+                Session selectedSession = selectReservedSession();
+                if (!confirmSession(selectedSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -184,27 +179,12 @@ public class Academy {
                 break;
             case 3:
                 Session selectedEditSession = promptSession(Student.class);
-                if (selectedEditSession == null) {
-                    System.out.println("Aborted.");
+                if (!confirmSession(selectedEditSession)) {
                     return;
                 }
 
-                char editSessionConfirmation = confirmSession(selectedEditSession);
-
-                if (editSessionConfirmation != 'y') {
-                    System.out.println("Aborted.");
-                    return;
-                }
-
-                Session.listReservedSessions();
-                System.out.println("Select your preferred session: ");
-                int newSessionSelection = scan.nextInt();
-
-                Session newSelectedSession = Session.getReservedSession(newSessionSelection - 1);
-                System.out.println(newSelectedSession.toString());
-                char newSessionConfirmation = confirmSession(newSelectedSession);
-
-                if (newSessionConfirmation != 'y') {
+                Session newSelectedSession = selectReservedSession();
+                if (!confirmSession(newSelectedSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
@@ -212,17 +192,31 @@ public class Academy {
                 loggedInStudent.editReservation(newSessionSelection, newSelectedSession);
                 break;
             case 4:
-                Session selectedSession = promptSession(Student.class);
-                char confirmation = confirmSession(selectedSession);
-
-                if (confirmation == 'y') {
+                Session selectedRemoveSession = promptSession(Student.class);
+                if (!confirmSession(selectedRemoveSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
 
-                loggedInStudent.removeReservation(selectedSession);
+                loggedInStudent.removeReservation(selectedRemoveSession);
+                break;
+            case 5:
+                logOut();
                 break;
         }
+    }
+
+    private static void logOut() {
+        loggedInInstructor = null;
+        loggedInStudent = null;
+        loginFlag = LoginFlags.NO_LOGIN;
+    }
+
+    private static Session selectReservedSession() {
+        Session.listReservedSessions();
+        System.out.println("Select your preferred session: ");
+        int selection = scan.nextInt();
+        return Session.getReservedSession(selection - 1);
     }
 
     private static void parseFirstTimeLogin() {
@@ -239,6 +233,9 @@ public class Academy {
             case 4:
                 System.out.println("our team has 4 people, you may visit us on our github project at: https://github.com/jim-low/infinity-academy");
                 System.out.println("# shame less self sponser");
+                break;
+            case 5:
+                sessionEnd = true;
                 break;
         }
     }
