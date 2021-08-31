@@ -30,6 +30,29 @@ public class Slot {
         return c;
     }
     
+    public static Calendar setupTimeSlot(){
+        Calendar c = Calendar.getInstance();
+        c.get(Calendar.HOUR);
+        c.get(Calendar.MINUTE);
+        return c;
+    }
+    
+    private static Calendar setupDate(int day, int month, int year){
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_MONTH, day);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.YEAR, year);
+        return c;
+    }
+    
+    public static Calendar setupDate(){
+        Calendar c = Calendar.getInstance();
+        c.get(Calendar.DAY_OF_MONTH);
+        c.get(Calendar.MONTH);
+        c.get(Calendar.YEAR);
+        return c;
+    }
+    
     public static void listSlots(){
         System.out.println("\tStart Time\tEnd Time");
         System.out.println("\t==========\t========");
@@ -48,7 +71,7 @@ public class Slot {
     }
     
     public String toString(){
-        return String.format("%s\t%s\n", this.getStartTime(), this.getEndTime());
+        return String.format("%s\t%s", this.getStartTime(), this.getEndTime());
     }
 
     public String getStartTime() {
@@ -68,13 +91,4 @@ public class Slot {
     public void setEndTime(Calendar endTime) {
         this.endTime = endTime;
     }
-<<<<<<< HEAD
 }
-=======
-
-    public String toString(){
-        return String.format("%s\t%s", this.getStartTime(), this.getEndTime());
-    }
-}
-
->>>>>>> main
