@@ -8,7 +8,7 @@ public class Card extends Transaction{
     private String accountNo;
     private double balance;
 
-    public Card(int cvcNo, String accountNo, double balance, double transactionAmount) {
+    public Card(double transactionAmount,String accountNo,int cvcNo,double balance) {
         super(transactionAmount);
         this.cvcNo = cvcNo;
         this.accountNo = accountNo;
@@ -37,6 +37,7 @@ public class Card extends Transaction{
             return;
         }
         this.balance -= cash;
+        //cash out
     }
 }
 

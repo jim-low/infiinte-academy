@@ -19,6 +19,14 @@ public abstract class Transaction {
         this.amount = transactionAmount;
     }
 
+    public static String getNextTransactionID() {
+        return nextTransactionID;
+    }
+
+    public static void setNextTransactionID(String nextTransactionID) {
+        Transaction.nextTransactionID = nextTransactionID;
+    }
+
     public static String createDate() {
         LocalDateTime myDateObj = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");

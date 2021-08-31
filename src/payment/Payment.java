@@ -1,8 +1,6 @@
 package payment;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import java.util.Random;
 import management.Academy;
 import personnel.Instructor;
@@ -66,20 +64,12 @@ public interface Payment {
         
         return amount == paidAmount;
     }
-
-    public static String inputAccountNo() {
-
-    }
-
-    public static int inputcvcNo() {
-
-    }
-
+    
     public static double generateRandomAmount(double min, double max) {
         Random r = new Random();
         return (min + (max - min) * r.nextDouble());
     }
-
+    
     public static double generateRandomAmount() {
         final double MIN = 250;
         final double MAX = 1750;
