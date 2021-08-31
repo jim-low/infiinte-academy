@@ -3,10 +3,8 @@ package system;
 import java.util.ArrayList;
 import management.Academy;
 import personnel.*;
-import management.*;
 
 public class Session {
-    // type your code here, all the best
     private Slot slot;
     private Course course;
     private Instructor instructor;
@@ -17,31 +15,33 @@ public class Session {
         this.course = course;
         this.instructor = instructor;
     }
-    
+
     public static Session createSession(Instructor instructor){
         Slot.listSlots();
         System.out.println();
         System.out.print("Enter your preferred slot: ");
         int slotSelection = Academy.scan.nextInt();
         Slot selectedSlot = Slot.search(slotSelection - 1);
-        
+
         Course.listCourses();
         System.out.println();
         System.out.print("Enter your desired course: ");
         int courseSelection = Academy.scan.nextInt();
         Course selectedCourse = Course.search(courseSelection);
-        
+
         return new Session(selectedSlot, selectedCourse, instructor);
     }
-    
+
     public static void addReservedSession(Session session) {
         RESERVED_SESSIONS.add(session);
     }
-    
+
     public static Session getReservedSession(int index) {
         if(index < 0 || index >= RESERVED_SESSIONS.size()){
             return null;
         }
+
+        return RESERVED_SESSIONS.get(index);
     }
 
     public static void listReservedSessions() {
@@ -55,9 +55,9 @@ public class Session {
     public static void removeReservedSession(Session session) {
         RESERVED_SESSIONS.remove(session);
     }
-    
+
     public String toString(){
-        return "Slot: " + this.slot.toString() + "\n" + 
+        return "Slot: " + this.slot.toString() + "\n" +
                "Course Name: " + this.course.getCourseName() + "\n" +
                "Instructor name: " + this.instructor.getName();
     }

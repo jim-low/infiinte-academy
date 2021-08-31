@@ -25,7 +25,7 @@ public interface Registration {
         }
     }
 
-    private static String promptAccountType() {
+    public static String promptAccountType() {
         System.out.println("Select Account Type:-");
         System.out.println("1. Instructor");
         System.out.println("2. Student");
