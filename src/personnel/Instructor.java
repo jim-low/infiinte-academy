@@ -120,9 +120,8 @@ public class Instructor extends Person implements Reservation {
     }
     
     public void editReservation(Session oldSession, Session newSession){
-        if(classes.indexOf(oldSession)!= -1){
-            classes.set(classes.indexOf(oldSession), newSession);
-        }
+        int oldSessionIndex = classes.indexOf(oldSession);
+        editReservation(oldSessionIndex, newSession);
     }
     
     @Override

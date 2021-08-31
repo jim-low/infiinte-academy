@@ -110,9 +110,8 @@ public class Student extends Person implements Reservation {
     }
     
     public void editReservation(Session oldSession, Session newSession){
-        if(reservedClasses.indexOf(oldSession)!= -1){
-            reservedClasses.set(reservedClasses.indexOf(oldSession), newSession);
-        }
+        int oldSessionIndex = reservedClasses.indexOf(oldSession);
+        editReservation(oldSessionIndex, newSession);
     }
 
     @Override
