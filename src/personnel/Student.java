@@ -104,8 +104,9 @@ public class Student extends Person implements Reservation {
     @Override
     public void editReservation(int index, Session session){
         if(index < 0 || index >= reservedClasses.size() ){
-            reservedClasses.set(index, session);
+            return;
         }
+        reservedClasses.set(index, session);
     }
 
     @Override
