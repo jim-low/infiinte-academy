@@ -24,6 +24,7 @@ interface Menu {
         System.out.println("1. Reserve a class session");
         System.out.println("2. List reserved sessions");
         System.out.println("3. Change reserved session information");
+        System.out.println("4. Remove session");
         System.out.println("5. Log Out");
     }
 
@@ -31,6 +32,7 @@ interface Menu {
         System.out.println("1. Reserve an instructor's class");
         System.out.println("2. List reserved classes");
         System.out.println("3. Change class");
+        System.out.println("4. Remove class");
         System.out.println("5. Log Out");
     }
 }
@@ -116,6 +118,9 @@ public class Academy {
 
                 loggedInInstructor.removeReservation(selectedSession);
                 break;
+            case 5:
+                logOut();
+                break;
         }
     }
 
@@ -195,7 +200,16 @@ public class Academy {
 
                 loggedInStudent.removeReservation(selectedRemoveSession);
                 break;
+            case 5:
+                logOut();
+                break;
         }
+    }
+
+    private static void logOut() {
+        loggedInInstructor = null;
+        loggedInStudent = null;
+        loginFlag = LoginFlags.NO_LOGIN;
     }
 
     private static Session selectReservedSession() {
@@ -219,6 +233,9 @@ public class Academy {
             case 4:
                 System.out.println("our team has 4 people, you may visit us on our github project at: https://github.com/jim-low/infinity-academy");
                 System.out.println("# shame less self sponser");
+                break;
+            case 5:
+                sessionEnd = true;
                 break;
         }
     }
