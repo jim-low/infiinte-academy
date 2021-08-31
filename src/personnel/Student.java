@@ -9,12 +9,12 @@ public class Student extends Person implements Reservation {
     private ArrayList<Course> enrolledCourses = new ArrayList<>();
     private ArrayList<Session> reservedClasses = new ArrayList<>();
     private static ArrayList<Student> studentList = new ArrayList<>();
-    private int studentID;
-    private static int nextStudentID = 1;
+    private String studentID;
+    private static int nextStudentID = 1000;
 
-    public Student(Person person, int studentID){
+    public Student(Person person, String studentID){
         super(person);
-        this.studentID = nextStudentID;
+        this.studentID = Code.STD.toString()+nextStudentID;
         ++nextStudentID;
     }
 
@@ -23,13 +23,13 @@ public class Student extends Person implements Reservation {
     }
 
     public void listCourse(){
-        System.out.print("          COURSE LIST           ");
-        System.out.print("--------------------------------");
+        System.out.print("          COURSE LIST           \n");
+        System.out.print("--------------------------------\n");
         for (int i = 0; i < enrolledCourses.size() ; i++) {
-                System.out.print(i+".");
+                System.out.print(i+1 +".");
                 System.out.println(" " +enrolledCourses.get(i));
             }
-            System.out.print("--------------------------------");
+            System.out.print("--------------------------------\n");
         }
 
     public void changeCourse(String courseName){
@@ -43,18 +43,33 @@ public class Student extends Person implements Reservation {
     }
 
     public void dropCourse(String courseName){
-        //call 2 methods in one line, course der getCourseName and euqals
         for(int i=0; i < enrolledCourses.size(); i++){
             if(enrolledCourses.get(i).getCourseName().equals(courseName)){
                 enrolledCourses.remove(enrolledCourses.get(i));
             }
         }
     }
-
-    public static Student search(String name){
+    
+    @Override
+    public String toString(){
+        return "Instructor ID      :" + studentID +" \n"
+             + "Instructor Name    : " + this.getName() +" \n"
+             + "Instructor email   : " + this.getEmail()+" \n"
+             + enrolledCourses.toString();
+    }
+    
+    public static void add(Student student){
+        studentList.add(student);
+    }
+    
+    public static void remove(Student student){
+        studentList.remove(student);
+    }
+    
+    public static Student search(String email, String password){
         Student found = null;
         for (Student student : studentList) {
-            if(student.getName().equals(name)){
+            if(student.getName().equals(email) && student.getPassword().equals(password)){
                 found = student;
                 break;
             }
@@ -63,10 +78,6 @@ public class Student extends Person implements Reservation {
     }
 
     @Override
-    public String toString(){
-        return super.toString() + String.format("Student ID : %s \n", studentID);
-    }
-
     public void addReservation(Session session){
         reservedClasses.add(session);
     }
@@ -74,21 +85,31 @@ public class Student extends Person implements Reservation {
     @Override
     public void listReservation(){
         //list session array
-        System.out.print("          RESERVATION LIST           ");
-        System.out.print("-------------------------------------");
+        System.out.print("          RESERVATION LIST           \n");
+        System.out.print("-------------------------------------\n");
         for (int i = 0; i < reservedClasses.size() ; i++) {
-                System.out.print(i+".");
+                System.out.print(i+1 +".");
                 System.out.println(" " +reservedClasses.get(i));
             }
-            System.out.print("--------------------------------");
+            System.out.print("--------------------------------\n");
     }
-
+    
+    public Session getReservation(int index){
+        if(index < 0 || index >= reservedClasses.size() ){
+            return null;
+        }
+        return reservedClasses.get(index);
+    }
+    
+    @Override
     public void editReservation(int index, Session session){
-        reservedClasses.set(index, session);
+        if(index < 0 || index >= reservedClasses.size() ){
+            reservedClasses.set(index, session);
+        }
     }
 
+    @Override
     public void removeReservation(Session session){
         reservedClasses.remove(session);
     }
 }
-
