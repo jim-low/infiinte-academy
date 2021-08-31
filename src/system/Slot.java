@@ -3,8 +3,9 @@ package system;
 import java.util.Calendar;
 
 public class Slot {
-    Calendar startTime;
-    Calendar endTime;
+    private Calendar startTime;
+    private Calendar endTime;
+
     public final static Slot[] AVAILABLE_SLOTS = {
         new Slot(setupTimeSlot(9, 00), setupTimeSlot(10, 30)),
         new Slot(setupTimeSlot(10, 00), setupTimeSlot(10, 00)),
