@@ -3,9 +3,9 @@ package system;
 import java.util.Calendar;
 
 public class Slot {
-    // type your code here, all the best
-    Calendar startTime;
-    Calendar endTime;
+    private Calendar startTime;
+    private Calendar endTime;
+
     public final static Slot[] AVAILABLE_SLOTS = {
         new Slot(setupTimeSlot(9, 00), setupTimeSlot(10, 30)),
         new Slot(setupTimeSlot(10, 00), setupTimeSlot(10, 00)),
@@ -30,6 +30,29 @@ public class Slot {
         return c;
     }
 
+    public static Calendar setupTimeSlot(){
+        Calendar c = Calendar.getInstance();
+        c.get(Calendar.HOUR);
+        c.get(Calendar.MINUTE);
+        return c;
+    }
+
+    public static Calendar setupDate(int day, int month, int year){
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_MONTH, day);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.YEAR, year);
+        return c;
+    }
+
+    public static Calendar setupDate(){
+        Calendar c = Calendar.getInstance();
+        c.get(Calendar.DAY_OF_MONTH);
+        c.get(Calendar.MONTH);
+        c.get(Calendar.YEAR);
+        return c;
+    }
+
     public static void listSlots(){
         System.out.println("\tStart Time\tEnd Time");
         System.out.println("\t==========\t========");
@@ -48,7 +71,7 @@ public class Slot {
     }
 
     public String toString(){
-        return String.format("%s\t%s\n", this.getStartTime(), this.getEndTime());
+        return String.format("%s\t%s", this.getStartTime(), this.getEndTime());
     }
 
     public String getStartTime() {

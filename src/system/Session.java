@@ -1,13 +1,14 @@
 package system;
 
+import java.util.ArrayList;
 import management.Academy;
 import personnel.*;
 
 public class Session {
-    // type your code here, all the best
     private Slot slot;
     private Course course;
     private Instructor instructor;
+    private final static ArrayList<Session> RESERVED_SESSIONS = new ArrayList<>();
 
     public Session(Slot slot, Course course, Instructor instructor) {
         this.slot = slot;
@@ -29,6 +30,36 @@ public class Session {
         Course selectedCourse = Course.search(courseSelection);
 
         return new Session(selectedSlot, selectedCourse, instructor);
+    }
+
+    public static void addReservedSession(Session session) {
+        RESERVED_SESSIONS.add(session);
+    }
+
+    public static Session getReservedSession(int index) {
+        if(index < 0 || index >= RESERVED_SESSIONS.size()){
+            return null;
+        }
+
+        return RESERVED_SESSIONS.get(index);
+    }
+
+    public static void listReservedSessions() {
+        System.out.println("\tRESERVED SESSIONS LIST");
+        System.out.println("\t======================");
+        for (int i = 0; i < RESERVED_SESSIONS.size(); i++) {
+            System.out.printf("%d.\t%s\n", i+1, RESERVED_SESSIONS.get(i));
+        }
+    }
+
+    public static void removeReservedSession(Session session) {
+        RESERVED_SESSIONS.remove(session);
+    }
+
+    public String toString(){
+        return "Slot: " + this.slot.toString() + "\n" +
+               "Course Name: " + this.course.getCourseName() + "\n" +
+               "Instructor name: " + this.instructor.getName();
     }
 
     public Slot getSlot() {
@@ -53,12 +84,6 @@ public class Session {
 
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
-    }
-
-    public String toString(){
-        return "Slot: " + this.slot.toString() + "\n" +
-               "Course Name: " + this.course.getCourseName() + "\n" +
-               "Instructor name: " + this.instructor.getName();
     }
 }
 
