@@ -3,17 +3,12 @@ package payment;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-enum TransactionCode {
-    CRE,
-    STD,
-    INS
-}
 
 public abstract class Transaction {
-
     protected String transactionID;
     protected Date dateCreated;
     protected Date expiryDate;
@@ -32,33 +27,32 @@ public abstract class Transaction {
         return formattedDate;
     }
     
-    static void findDifference(String start_date, String end_date) {
+    public static void calculateDateDifference(String startDate, String endDate) {
   
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         try {
-            Date d1 = sdf.parse(start_date);
-            Date d2 = sdf.parse(end_date);
+            Date d1 = sdf.parse(startDate);
+            Date d2 = sdf.parse(endDate);
 
             // Calucalte time difference
-            long diff_In_Time = d2.getTime() - d1.getTime();
-
+            long diffInTime = d2.getTime() - d1.getTime();
             // Calucalte time difference in seconds,
             // minutes, hours, years, and days
-            long diff_In_Sec = TimeUnit.MILLISECONDS.toSeconds(diff_In_Time) % 60;
+            long diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInTime) % 60;
 
-            long diff_In_Mins = TimeUnit.MILLISECONDS.toMinutes(diff_In_Time) % 60;
+            long diffInMins = TimeUnit.MILLISECONDS.toMinutes(diffInTime) % 60;
 
-            long diff_In_Hrs = TimeUnit.MILLISECONDS.toHours(diff_In_Time) % 24;
+            long diffInHrs = TimeUnit.MILLISECONDS.toHours(diffInTime) % 24;
             
-            long diff_In_Days = TimeUnit.MILLISECONDS.toDays(diff_In_Time) % 365;
+            long diffInDays = TimeUnit.MILLISECONDS.toDays(diffInTime) % 365;
 
             System.out.print("Difference" + " between two dates is: ");
 
             // Print result
-            System.out.println(diff_In_Days + " days, "
-                    + diff_In_Hrs + " hours, " 
-                    + diff_In_Mins + " minutes, "
-                    + diff_In_Sec + " seconds");
+            System.out.println(diffInDays + " days, "
+                    + diffInHrs + " hours, " 
+                    + diffInMins + " minutes, "
+                    + diffInSec + " seconds");
         } catch (ParseException e) {
             e.printStackTrace();
         }
