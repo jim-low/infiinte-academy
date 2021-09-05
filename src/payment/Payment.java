@@ -1,60 +1,75 @@
 package payment;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import java.util.Random;
-import java.util.regex.Pattern;
 import management.Academy;
+import personnel.Instructor;
+import personnel.Student;
+import system.Course;
 
 public interface Payment {
-    public static boolean performPayment(String type, double amount) {
-        paymentInterface();
-        String accountNo = inputAccountNo();
-        int intNo = inputcvcNo();
-        System.out.printf("\n\nYOUR ACCOUNT HAS BEEN ACTIVATED IN OUR ACEDEMY\n");
+    public static <T> boolean performPayment(Card card, double amount, Class<T> type) {
+        String transactionCode = "";
+        if (type.equals(Course.class)) {
+            String transcode = Code.CRE.toString();
+        } else if (type.equals(Student.class)) {
+            String transcode = Code.STD.toString();
+        }
+        else if (type.equals(Instructor.class)) {
+            String transcode = Code.INS.toString();
+        }
+        int counter = 3;
+        String accountNo = "";
+        while(counter > 0) {
+            System.out.print("Enter your account number : ");
+            accountNo = Academy.scan.next();
+            System.out.print("\nConfirm your account number : ");
+            String confirmationAccountNo = Academy.scan.next();
+            
+            if(!Card.validateAccount(accountNo, confirmationAccountNo)) {
+                System.out.println("Your account number does not match. Please kindly try again.");
+                counter--;
+            }
+        }
+        
+        counter = 3;
+        int cvcNo = 0;
+        while(counter > 0) {
+             System.out.print("Enter your CVC number : ");
+            cvcNo = Academy.scan.nextInt();
+            System.out.print("\nConfirm your CVC number : ");
+            int confirmationCvcNo = Academy.scan.nextInt();
+            
+            if(!Card.validateCvcNo(cvcNo, confirmationCvcNo)) {
+                System.out.println("Your CVC numbers do not match. Please kindly try again.");
+                counter--;
+            }
+        }
 
         System.out.printf("Enter the amount to pay (RM) : ");
         double paidAmount = Academy.scan.nextDouble();
 
-        otpValidation();
-        System.out.println("\nThank you for using our payment system.\n");
+        counter = 3;
+        String otp = generateOTP();
+        while (counter > 0) {
+            System.out.printf("Your OTP code : %s\n", otp);
+            System.out.print("Enter the OTP code as shown above >>> ");
+            String confirmationOtp = Academy.scan.next();
 
+            if (!otp.equals(confirmationOtp)) {
+                System.out.println("Your OTP codes do not match. Please kindly try again.");
+                counter--;
+            }
+        }
+        
         return amount == paidAmount;
-
     }
-
-    public static String inputAccountNo() {
-        String accountNo, tempStr;
-        do {
-            System.out.printf("\n\nPlease enter your account number [xxxx-xxx-xxxx] : ");
-            accountNo = Academy.scan.next();
-            System.out.printf("\nPlease comfirm your accountNo : ");
-            tempStr = Academy.scan.next();
-        } while (!(accountNo.equals(tempStr))
-                || (accountNo.length() != 13)
-                || (!(Pattern.matches("\\d{4}-{1}\\d{3}-{1}\\d{4}", accountNo))));
-        return accountNo;
-    }
-
-    public static int inputcvcNo() {
-        int cvcNo, tempNo;
-        do {
-            System.out.printf("\n\nPlease enter your cvcNo [xxx] : ");
-            cvcNo = Academy.scan.nextInt();
-            System.out.printf("\nPlease comfirm your cvcNo : ");
-            tempNo = Academy.scan.nextInt();
-        } while ((cvcNo != tempNo) || !(cvcNo >= 100 && cvcNo <= 999));
-        TimeDelay();
-        System.out.println("\nThank you for your cvcNo comfirmation\n");
-        return cvcNo;
-    }
-
+    
     public static double generateRandomAmount(double min, double max) {
         Random r = new Random();
         return (min + (max - min) * r.nextDouble());
     }
-
+    
     public static double generateRandomAmount() {
         final double MIN = 250;
         final double MAX = 1750;
@@ -63,55 +78,29 @@ public interface Payment {
     }
 
     public static String generateOTP() {
-        String ch = "ABCDEFGabcdefg1234567"; //character involve
+        String characters = "ABCDEFGabcdefg1234567"; //character involve
         String otp = "";                     //otp string
-        Random random = new Random();
-        System.out.println("Generating OTP\n");
         //TimeDelay();
-        char[] text = new char[7];           //the length of the otp is 7 characters
-        for (int i = 0; i < text.length; i++) { //generate otp
-            text[i] = ch.charAt(random.nextInt(ch.length()));
-            otp += text[i];
+        String text = "";           
+        for (int i = 0; i < 7; i++) { //generate otp
+            int index = (int)Math.random()*characters.length();
+            otp += characters.charAt(index);
         }
         return otp;
     }
 
-    public static boolean otpValidation() {
-        String otp = generateOTP();
-        String inputOtp = "";
-        do {
-            System.out.printf("\n\nOTP Account validation\n" + "=======================\n\n"
-                    + "Please enter the values as given >>> " + otp + "\nEnter here : ");
-            inputOtp = Academy.scan.next();
-        } while (!otp.equals(inputOtp));
-        return (otp.equals(inputOtp));
-    }
 
-    public static void paymentInterface() {
-        System.out.println("*************************\n"
-                + "*    Payment Platform   *\n"
-                + "*     [INFINITY BANK]   *\n"
-                + "*************************\n");
-        getdate();
-    }
-
-    public static void getdate() {
-        DateFormat dfor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date obj = new Date();
-        System.out.println(dfor.format(obj));
-    }
-
-    public static void TimeDelay() {
-        try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
-        }
-        System.out.println("In progress...");
-        try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
-        }
-        System.out.println("Done\n");
-    }
+//    public static void TimeDelay() {
+//        try {
+//            Thread.sleep(2000);
+//        } catch (Exception e) {
+//        }
+//        System.out.println("In progress...");
+//        try {
+//            Thread.sleep(2000);
+//        } catch (Exception e) {
+//        }
+//        System.out.println("Done\n");
+//    }
 }
 

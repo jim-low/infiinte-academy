@@ -1,6 +1,8 @@
 package payment;
 
 public interface Receipt {
-    // type your code here, all the best
+    public void receiptInterfaceStudent();
+    public void receiptInterfaceInstructor();
+    public void receiptInterfaceCourse();
 }
 
