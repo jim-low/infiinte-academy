@@ -5,4 +5,3 @@ public interface Receipt {
     public void receiptInterfaceInstructor();
     public void receiptInterfaceCourse();
 }
-

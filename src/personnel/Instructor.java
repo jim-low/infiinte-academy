@@ -23,7 +23,7 @@ public class Instructor extends Person implements Reservation {
 
     public Instructor(Person person, String instructorID, Course course){
         super(person);
-        this.instructorID = Code.INS.toString()+nextInstructorID;;
+        this.instructorID = CODE.INS.toString()+nextInstructorID;;
         ++nextInstructorID;
     }
 

@@ -1,4 +1,5 @@
 package system;
+
 enum FIELD_OF_STUDY {
     COMPUTER_SCIENCE,
     INFORMATION_TECHNOLOGY,
@@ -8,6 +9,7 @@ enum FIELD_OF_STUDY {
     FINANCE,
     SCIENCE
 }
+
 public class Course {
     // type your code here, all the best
     private String courseName;

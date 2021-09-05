@@ -14,7 +14,7 @@ public class Student extends Person implements Reservation {
 
     public Student(Person person, String studentID){
         super(person);
-        this.studentID = Code.STD.toString()+nextStudentID;
+        this.studentID = CODE.STD.toString()+nextStudentID;
         ++nextStudentID;
     }
 
