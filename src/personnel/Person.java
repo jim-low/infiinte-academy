@@ -43,7 +43,7 @@ public class Person {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getPassword() {
         return password;
     }
@@ -79,7 +79,7 @@ public class Person {
     public void setCard(Card card) {
         this.card = card;
     }
-    
+
     public static <T> T search (String email, String password, Class<T> type){
         T person = null;
 
@@ -87,8 +87,8 @@ public class Person {
             person = type.cast(Student.search(email, password));
         } else if(type.equals(Instructor.class)){
             person = type.cast(Instructor.search(email, password));
-        }    
-        
+        }
+
         return person;
     }
  }
