@@ -14,7 +14,7 @@ public class Student extends Person implements Reservation {
 
     public Student(Person person, String studentID){
         super(person);
-        this.studentID = CODE.STD.toString()+nextStudentID;
+        this.studentID = SystemCodes.STD.toString() + nextStudentID;
         ++nextStudentID;
     }
 
@@ -83,7 +83,7 @@ public class Student extends Person implements Reservation {
     }
 
     @Override
-    public void listReservation(){
+    public void listReservations(){
         //list session array
         System.out.print("          RESERVATION LIST           \n");
         System.out.print("-------------------------------------\n");
@@ -108,7 +108,7 @@ public class Student extends Person implements Reservation {
         }
         reservedClasses.set(index, session);
     }
-    
+
     public void editReservation(Session oldSession, Session newSession){
         int oldSessionIndex = reservedClasses.indexOf(oldSession);
         editReservation(oldSessionIndex, newSession);

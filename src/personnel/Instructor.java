@@ -23,7 +23,7 @@ public class Instructor extends Person implements Reservation {
 
     public Instructor(Person person, String instructorID, Course course){
         super(person);
-        this.instructorID = CODE.INS.toString()+nextInstructorID;;
+        this.instructorID = SystemCodes.INS.toString() + nextInstructorID;;
         ++nextInstructorID;
     }
 
@@ -94,7 +94,7 @@ public class Instructor extends Person implements Reservation {
     }
 
     @Override
-    public void listReservation(){
+    public void listReservations(){
         System.out.print("          RESERVATION LIST           \n");
         System.out.print("-------------------------------------\n");
         for (int i = 0; i < classes.size() ; i++) {
@@ -118,12 +118,12 @@ public class Instructor extends Person implements Reservation {
         }
         classes.set(index, session);
     }
-    
+
     public void editReservation(Session oldSession, Session newSession){
         int oldSessionIndex = classes.indexOf(oldSession);
         editReservation(oldSessionIndex, newSession);
     }
-    
+
     @Override
     public void removeReservation(Session session){
         classes.remove(session);
