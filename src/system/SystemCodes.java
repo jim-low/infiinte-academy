@@ -4,6 +4,6 @@ public enum SystemCodes {
     CRE,
     STD,
     INS,
-    RTP
+    RPT
 }
 
