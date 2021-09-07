@@ -1,6 +1,5 @@
 package payment;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import java.util.Random;
 import management.Academy;
 import personnel.Instructor;
