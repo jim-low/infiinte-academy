@@ -12,7 +12,7 @@ public class Student extends Person implements Reservation {
     private String studentID;
     private static int nextStudentID = 1000;
 
-    public Student(Person person, String studentID){
+    public Student(Person person){
         super(person);
         this.studentID = SystemCodes.STD.toString() + nextStudentID;
         ++nextStudentID;
@@ -50,14 +50,6 @@ public class Student extends Person implements Reservation {
         }
     }
 
-    @Override
-    public String toString(){
-        return "Instructor ID      :" + studentID +" \n"
-             + "Instructor Name    : " + this.getName() +" \n"
-             + "Instructor email   : " + this.getEmail()+" \n"
-             + enrolledCourses.toString();
-    }
-
     public static void add(Student student){
         studentList.add(student);
     }
@@ -77,6 +69,13 @@ public class Student extends Person implements Reservation {
         return found;
     }
 
+    public Session getReservation(int index){
+        if(index < 0 || index >= reservedClasses.size() ){
+            return null;
+        }
+        return reservedClasses.get(index);
+    }
+
     @Override
     public void addReservation(Session session){
         reservedClasses.add(session);
@@ -94,13 +93,6 @@ public class Student extends Person implements Reservation {
             System.out.print("--------------------------------\n");
     }
 
-    public Session getReservation(int index){
-        if(index < 0 || index >= reservedClasses.size() ){
-            return null;
-        }
-        return reservedClasses.get(index);
-    }
-
     @Override
     public void editReservation(int index, Session session){
         if(index < 0 || index >= reservedClasses.size() ){
@@ -109,6 +101,7 @@ public class Student extends Person implements Reservation {
         reservedClasses.set(index, session);
     }
 
+    @Override
     public void editReservation(Session oldSession, Session newSession){
         int oldSessionIndex = reservedClasses.indexOf(oldSession);
         editReservation(oldSessionIndex, newSession);
@@ -117,5 +110,17 @@ public class Student extends Person implements Reservation {
     @Override
     public void removeReservation(Session session){
         reservedClasses.remove(session);
+    }
+
+    public String getID() {
+        return this.studentID;
+    }
+
+    @Override
+    public String toString(){
+        return "Instructor ID      :" + studentID +" \n"
+             + "Instructor Name    : " + this.getName() +" \n"
+             + "Instructor email   : " + this.getEmail()+" \n"
+             + enrolledCourses.toString();
     }
 }

@@ -13,17 +13,14 @@ public class Instructor extends Person implements Reservation {
     private String instructorID;
     private static int nextInstructorID = 1000;
 
+    public Instructor(Person person){
+        this(person, null);
+    }
+
     public Instructor(Person person, Course course){
-        this(person,"",course);
-    }
-
-    public Instructor(Person person, String instructorID){
-        this(person, instructorID, null);
-    }
-
-    public Instructor(Person person, String instructorID, Course course){
         super(person);
         this.instructorID = SystemCodes.INS.toString() + nextInstructorID;;
+        this.course = course;
         ++nextInstructorID;
     }
 
@@ -85,6 +82,10 @@ public class Instructor extends Person implements Reservation {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public String getID() {
+        return this.instructorID;
     }
 
     @Override
