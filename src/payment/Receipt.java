@@ -35,7 +35,7 @@ public interface Receipt {
         System.out.println("Payment method : " + "Online\n");
         System.out.println("Receipt for: \n" + "\tMr/Mrs :" + person.getName() + "\n"
                 + "\tEmail : " + person.getEmail()+"\n"
-                + "\tAccount number : " + person.getCard().getAccountNumber); //change in card
+                + "\tAccount number : " + person.getCard().getAccountNumber()); //change in card
         System.out.println("\n------------------------------------Welcome----------------------------------------------\n");
         System.out.println("You have successfully registered as a student in Infinity Academy!!!\n");
         System.out.println("Registration fee : RM" + person.getCard().getTransactionAmount() + "\n"
@@ -55,7 +55,7 @@ public interface Receipt {
         System.out.println("Payment method : " + "Online\n");
         System.out.println("Receipt for: \n" + "\tMr/Mrs" + person.getName() + "\n"
                 + "\tEmail : " + person.getEmail() +"\n"
-                + "\tAccount number : " + person.getCard().getAccountNumber  +"\n"); //change in card
+                + "\tAccount number : " + person.getCard().getAccountNumber()  +"\n"); //change in card
         System.out.println("\n------------------------------------Welcome----------------------------------------------\n");
         System.out.println("You have suceesfully purchased the courses in Infinity Academy\n");
         System.out.printf("%-45s  %-13s  %-30s\n","Course","Course Fees","Field of courses");
