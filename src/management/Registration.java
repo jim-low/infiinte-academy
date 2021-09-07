@@ -52,7 +52,10 @@ public interface Registration {
 
     private static Instructor setupInstructor(Person person) {
         System.out.print("Now you will be brought to setup your course.");
-        Course course = Course.setupCourse();
+        Course.listCourses();
+        System.out.print("Enter your desired course: ");
+        int selection = Academy.scan.nextInt();
+        Course course = Course.search(selection - 1);
 
         return new Instructor(person, course);
     }
