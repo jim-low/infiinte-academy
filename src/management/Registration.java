@@ -7,20 +7,20 @@ import payment.Payment;
 public interface Registration {
     public static void performRegistration() {
         String accountType = promptAccountType();
-        Person basicInfo = setupPerson();
+        Person person = setupPerson();
 
         System.out.println("You will now be going through the payment process.");
-        boolean paid = Payment.performPayment(accountType, Payment.generateRandomAmount());
+        boolean paid = Payment.performPayment(person.getCard(), accountType, Payment.generateRandomAmount());
         if (!paid) {
             System.out.println("Payment Unsuccessful. Account not registered.");
             return;
         }
 
         if (accountType.equals("Student")) {
-            Student student = setupStudent(basicInfo);
+            Student student = setupStudent(person);
             Student.add(student);
         } else {
-            Instructor instructor = setupInstructor(basicInfo);
+            Instructor instructor = setupInstructor(person);
             Instructor.add(instructor);
         }
     }
