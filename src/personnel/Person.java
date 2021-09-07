@@ -1,6 +1,5 @@
 package personnel;
 
-import management.Academy;
 import payment.Card;
 
 public class Person {
@@ -12,27 +11,28 @@ public class Person {
     private Card card;
 
     public Person(){
-        this("","","", "");
+        this("","","", "", null);
     }
 
     public Person(Person person){
-        this(person.name, person.password, person.gender, person.email);
+        this(person.name, person.password, person.gender, person.email, null);
     }
 
     public Person(String name) {
-        this(name, "", "","");
+        this(name, "", "","", null);
     }
 
     public Person(String name, String password, String email) {
-        this(name, "","", email);
+        this(name, "","", email, null);
 
     }
 
-    public Person(String name,String password, String gender, String email) {
+    public Person(String name,String password, String gender, String email, Card card) {
         this.name = name;
         this.gender = gender;
         this.password = password;
         this.email = email;
+        this.card = card;
         this.paidFee = false;
     }
 
