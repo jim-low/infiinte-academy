@@ -10,7 +10,15 @@ public interface Registration {
         Person person = setupPerson();
 
         System.out.println("You will now be going through the payment process.");
-        boolean paid = Payment.performPayment(person.getCard(), accountType, Payment.generateRandomAmount());
+        boolean paid = false;
+
+        if (accountType.equals("Student")) {
+            paid = Payment.performPayment(person.getCard(), Payment.generateRandomAmount(), Student.class);
+        }
+        else {
+            paid = Payment.performPayment(person.getCard(), Payment.generateRandomAmount(), Instructor.class);
+        }
+
         if (!paid) {
             System.out.println("Payment Unsuccessful. Account not registered.");
             return;
