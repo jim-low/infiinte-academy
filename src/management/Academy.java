@@ -1,5 +1,6 @@
 package management;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import personnel.*;
@@ -42,12 +43,11 @@ public class Academy {
     private static Instructor loggedInInstructor = null;
     private static int loginFlag = LoginFlags.NO_LOGIN;
     private static int choice;
-    private static boolean sessionEnd = false;
 
     public static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
-        while (!sessionEnd) {
+        while (choice != 5 && loginFlag != LoginFlags.NO_LOGIN) {
             showAcademyBanner();
             showMenu();
             System.out.println();
@@ -55,6 +55,17 @@ public class Academy {
             choice = scan.nextInt();
             parseChoice();
             System.out.println();
+        }
+    }
+
+    public static void clearScreen() throws InterruptedException, IOException {
+        try {
+            // windows clear screen command
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        }
+        catch (InterruptedException | IOException e) {
+            // linux clear screen command
+            new ProcessBuilder("clear").inheritIO().start().waitFor();
         }
     }
 
@@ -93,11 +104,12 @@ public class Academy {
                 loggedInInstructor.addReservation(createdSession);
                 break;
             case 2:
-                loggedInInstructor.listReservation();
+                loggedInInstructor.listReservations();
                 break;
             case 3:
                 Session selectedEditSession = selectEditSession(Instructor.class);
                 if (selectedEditSession == null) {
+                    System.out.println("Aborted.");
                     return;
                 }
 
@@ -110,13 +122,13 @@ public class Academy {
                 loggedInInstructor.editReservation(selectedEditSession, newSession);
                 break;
             case 4:
-                Session selectedSession = promptSession(Instructor.class);
-                if (!confirmSession(selectedSession)) {
-                    System.out.println("Session Removal Aborted");
+                Session selectedRemoveSession = promptSession(Instructor.class);
+                if (!confirmSession(selectedRemoveSession)) {
+                    System.out.println("Aborted.");
                     return;
                 }
 
-                loggedInInstructor.removeReservation(selectedSession);
+                loggedInInstructor.removeReservation(selectedRemoveSession);
                 break;
             case 5:
                 logOut();
@@ -150,11 +162,11 @@ public class Academy {
 
         if (type.equals(Student.class)) {
             student = loggedInStudent;
-            student.listReservation();
+            student.listReservations();
         }
         else if (type.equals(Instructor.class)) {
             instructor = loggedInInstructor;
-            instructor.listReservation();
+            instructor.listReservations();
         }
 
         System.out.print("Enter Session number(0 to abort): ");
@@ -175,7 +187,7 @@ public class Academy {
                 loggedInStudent.addReservation(selectedSession);
                 break;
             case 2:
-                loggedInStudent.listReservation();
+                loggedInStudent.listReservations();
                 break;
             case 3:
                 Session selectedEditSession = promptSession(Student.class);
@@ -189,7 +201,7 @@ public class Academy {
                     return;
                 }
 
-                loggedInStudent.editReservation(newSessionSelection, newSelectedSession);
+                loggedInStudent.editReservation(selectedEditSession, newSelectedSession);
                 break;
             case 4:
                 Session selectedRemoveSession = promptSession(Student.class);
@@ -234,9 +246,6 @@ public class Academy {
                 System.out.println("our team has 4 people, you may visit us on our github project at: https://github.com/jim-low/infinity-academy");
                 System.out.println("# shame less self sponser");
                 break;
-            case 5:
-                sessionEnd = true;
-                break;
         }
     }
 
@@ -249,7 +258,7 @@ public class Academy {
             loginFlag = loggedInStudent != null ? LoginFlags.STUDENT_LOGIN : LoginFlags.NO_LOGIN;
         }
         else if (accountType.equals("Instructor")) {
-            loggedInInstructor = Person.search(credentials[0], credentials[1], Student.class);
+            loggedInInstructor = Person.search(credentials[0], credentials[1], Instructor.class);
             loginFlag = loggedInInstructor != null ? LoginFlags.INSTRUCTOR_LOGIN : LoginFlags.NO_LOGIN;
         }
 
