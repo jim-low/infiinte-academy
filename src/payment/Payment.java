@@ -83,7 +83,7 @@ public interface Payment {
     public static String generateOTP() {
         String characters = "ABCDEFGabcdefg1234567"; //character involve
         String otp = "";                     //otp string
-        //TimeDelay();
+        TimeDelay();
         String text = "";
         for (int i = 0; i < 7; i++) { //generate otp
             int index = (int)Math.random()*characters.length();
@@ -92,18 +92,17 @@ public interface Payment {
         return otp;
     }
 
-
-//    public static void TimeDelay() {
-//        try {
-//            Thread.sleep(2000);
-//        } catch (Exception e) {
-//        }
-//        System.out.println("In progress...");
-//        try {
-//            Thread.sleep(2000);
-//        } catch (Exception e) {
-//        }
-//        System.out.println("Done\n");
-//    }
+    public static void TimeDelay() {
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }
+        System.out.println("In progress...");
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }
+        System.out.println("Done\n");
+    }
 }
 
