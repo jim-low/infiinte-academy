@@ -3,6 +3,7 @@ package management;
 import personnel.*;
 import system.Course;
 import payment.Payment;
+import payment.Card;
 
 public interface Registration {
     public static void performRegistration() {
@@ -60,34 +61,33 @@ public interface Registration {
         return new Instructor(person, course);
     }
 
-    static void printQualificationsMenu() {
-        System.out.println("Select your latest qualification:-");
-        System.out.println("1. SPM");
-        System.out.println("2. Diploma");
-        System.out.println("3. Degree");
-        System.out.println("4. Masters");
-        System.out.println("5. PhD");
-    }
-
     private static Student setupStudent(Person person) {
         return new Student(person);
     }
 
     private static Person setupPerson() {
         System.out.print("Enter your name: ");
-        String name = Academy.scan.nextLine();
+        String name = Academy.scan.next();
+
+        System.out.print("Enter your password: ");
+        String password = new String(System.console().readPassword());
 
         System.out.println("Select your gender: ");
         System.out.println("1. Male");
         System.out.println("2. Female");
         System.out.println();
         System.out.print("Your gender: ");
+        Academy.scan.nextLine();
         String gender = Academy.scan.nextInt() == 1 ? "Male" : "Female";
 
         System.out.print("Enter your email: ");
+        Academy.scan.nextLine();
         String email = Academy.scan.next();
 
-        return new Person(name, gender, email);
+        System.out.println("You will now proceed to setup your card");
+        Card card = Card.setupCard();
+
+        return new Person(name, password, gender, email, card);
     }
 
 }
