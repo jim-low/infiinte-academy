@@ -1,6 +1,7 @@
 package payment;
 
 import java.util.regex.Pattern;
+import management.Academy;
 
 public class Card extends Transaction {
     private int cvcNo;
@@ -21,10 +22,32 @@ public class Card extends Transaction {
         return isSame && isValidLength && isMatch;
     }
 
+    public static boolean validateAccount(String accountNum) {
+        boolean isValidLength = accountNum.length() == 13;
+        boolean isMatch = Pattern.matches("\\d{4}-{1}\\d{3}-{1}\\d{4}", accountNum);
+        return isValidLength && isMatch;
+    }
+
     public static boolean validateCvcNo(int cvcNo, int confirmationCvcNum) {
         boolean isSame = (cvcNo == confirmationCvcNum);
         boolean isWithin = (cvcNo >= 100 && cvcNo <= 999);
         return isSame && isWithin;
+    }
+
+    public static boolean validateCvcNo(int cvcNo) {
+        return (cvcNo >= 100 && cvcNo <= 999);
+    }
+
+    public static Card setupCard() {
+        System.out.print("Enter your account number: ");
+        String cardNum = Academy.scan.next();
+
+        System.out.println();
+        System.out.print("Enter your CVC number: ");
+        int cardCvc = Academy.scan.nextInt();
+
+        double balance = Payment.generateRandomAmount(1000, 2000);
+        return validateAccount(cardNum) && validateCvcNo(cardCvc) ? new Card(0, cardNum, cardCvc, balance) : null;
     }
 
     public void cashIn(double cash) {
