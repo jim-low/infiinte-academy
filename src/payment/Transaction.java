@@ -9,27 +9,20 @@ import java.util.concurrent.TimeUnit;
 
 
 public abstract class Transaction {
-    protected String transactionID;
-    protected Date dateCreated;
-    protected Date expiryDate;
+    protected Calendar dateCreated;
+    protected Calendar expiryDate;
     protected double amount;
-    private static String nextTransactionID;
 
     public Transaction(double transactionAmount) {
         this.amount = transactionAmount;
-    }
-
-    public static String getNextTransactionID() {
-        return nextTransactionID;
-    }
-
-    public static void setNextTransactionID(String nextTransactionID) {
-        Transaction.nextTransactionID = nextTransactionID;
+        this.dateCreated = Calendar.getInstance();
+        this.expiryDate = Calendar.getInstance();
+        this.expiryDate.set(Calendar.DAY_OF_MONTH, this.dateCreated.get(Calendar.DAY_OF_MONTH)+14);
     }
 
     public static String createDate() {
         LocalDateTime myDateObj = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         String formattedDate = myDateObj.format(myFormatObj);
         return formattedDate;
