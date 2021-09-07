@@ -6,18 +6,21 @@ import management.Academy;
 import personnel.Instructor;
 import personnel.Student;
 import system.Course;
+import system.SystemCodes;
 
 public interface Payment {
     public static <T> boolean performPayment(Card card, double amount, Class<T> type) {
+
         String transactionCode = "";
         if (type.equals(Course.class)) {
-            String transcode = Code.CRE.toString();
+            String transcode = SystemCodes.CRE.toString();
         } else if (type.equals(Student.class)) {
-            String transcode = Code.STD.toString();
+            String transcode = SystemCodes.STD.toString();
         }
         else if (type.equals(Instructor.class)) {
-            String transcode = Code.INS.toString();
+            String transcode = SystemCodes.INS.toString();
         }
+
         int counter = 3;
         String accountNo = "";
         while(counter > 0) {
@@ -25,13 +28,13 @@ public interface Payment {
             accountNo = Academy.scan.next();
             System.out.print("\nConfirm your account number : ");
             String confirmationAccountNo = Academy.scan.next();
-            
+
             if(!Card.validateAccount(accountNo, confirmationAccountNo)) {
                 System.out.println("Your account number does not match. Please kindly try again.");
                 counter--;
             }
         }
-        
+
         counter = 3;
         int cvcNo = 0;
         while(counter > 0) {
@@ -39,7 +42,7 @@ public interface Payment {
             cvcNo = Academy.scan.nextInt();
             System.out.print("\nConfirm your CVC number : ");
             int confirmationCvcNo = Academy.scan.nextInt();
-            
+
             if(!Card.validateCvcNo(cvcNo, confirmationCvcNo)) {
                 System.out.println("Your CVC numbers do not match. Please kindly try again.");
                 counter--;
@@ -61,15 +64,15 @@ public interface Payment {
                 counter--;
             }
         }
-        
+
         return amount == paidAmount;
     }
-    
+
     public static double generateRandomAmount(double min, double max) {
         Random r = new Random();
         return (min + (max - min) * r.nextDouble());
     }
-    
+
     public static double generateRandomAmount() {
         final double MIN = 250;
         final double MAX = 1750;
@@ -81,7 +84,7 @@ public interface Payment {
         String characters = "ABCDEFGabcdefg1234567"; //character involve
         String otp = "";                     //otp string
         //TimeDelay();
-        String text = "";           
+        String text = "";
         for (int i = 0; i < 7; i++) { //generate otp
             int index = (int)Math.random()*characters.length();
             otp += characters.charAt(index);
