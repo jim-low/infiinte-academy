@@ -2,8 +2,7 @@ package payment;
 
 import java.util.regex.Pattern;
 
-public class Card extends Transaction{
-
+public class Card extends Transaction {
     private int cvcNo;
     private String accountNo;
     private double balance;
@@ -27,7 +26,7 @@ public class Card extends Transaction{
         boolean isWithin = (cvcNo >= 100 && cvcNo <= 999);
         return isSame && isWithin;
     }
-    
+
     public void cashIn(double cash) {
         this.balance += cash;
     }
@@ -37,7 +36,18 @@ public class Card extends Transaction{
             return;
         }
         this.balance -= cash;
-        //cash out
+    }
+
+    public int getCvcNo() {
+        return cvcNo;
+    }
+
+    public String getAccountNumber() {
+        return accountNo;
+    }
+
+    public double getBalance() {
+        return balance;
     }
 }
 
