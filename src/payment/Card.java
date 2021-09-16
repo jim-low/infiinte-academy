@@ -1,5 +1,6 @@
 package payment;
 
+import java.util.InputMismatchException;
 import java.util.regex.Pattern;
 import management.Academy;
 
@@ -38,13 +39,36 @@ public class Card extends Transaction {
         return (cvcNo >= 100 && cvcNo <= 999);
     }
 
-    public static Card setupCard() {
+    public static String promptAccountNumber() {
         System.out.print("Enter your account number: ");
-        String cardNum = Academy.scan.next();
+        String accountNumber = Academy.scan.next();
+        Academy.scan.nextLine();
 
-        System.out.println();
-        System.out.print("Enter your CVC number: ");
-        int cardCvc = Academy.scan.nextInt();
+        return accountNumber;
+    }
+
+    public static int promptCvcNumber() {
+        Integer cvc = null;
+        while (cvc == null) {
+            try {
+                System.out.print("Enter your CVC number: ");
+                cvc = Academy.scan.nextInt();
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Incorrect input! Please try again.");
+                System.out.println();
+                Academy.scan.nextLine();
+            }
+        }
+        return cvc;
+    }
+
+    public static Card setupCard() {
+        System.out.println("Enter your card details:-");
+
+        String cardNum = promptAccountNumber();
+
+        int cardCvc = promptCvcNumber();
 
         double balance = Payment.generateRandomAmount(1000, 2000);
         return validateAccount(cardNum) && validateCvcNo(cardCvc) ? new Card(0, cardNum, cardCvc, balance) : null;

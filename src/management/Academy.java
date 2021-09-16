@@ -10,15 +10,14 @@ interface LoginFlags {
     final static int NO_LOGIN = 0;
     final static int STUDENT_LOGIN = 1;
     final static int INSTRUCTOR_LOGIN = 2;
+    final static int EXIT = 3;
 }
 
 interface Menu {
     static void mainMenu() {
         System.out.println("1. Register An Account In Infinity Academy");
         System.out.println("2. Log In To Infinity Academy");
-        System.out.println("3. About Infinity Academy");
-        System.out.println("4. Meet The Team");
-        System.out.println("5. Exit");
+        System.out.println("3. Exit");
     }
 
     static void instructorMenu() {
@@ -46,16 +45,29 @@ public class Academy {
 
     public static Scanner scan = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        while (choice != 5 && loginFlag != LoginFlags.NO_LOGIN) {
+    public static void main(String[] args) throws InterruptedException, IOException {
+        while (loginFlag != LoginFlags.EXIT) {
+            clearScreen();
             showAcademyBanner();
             showMenu();
             System.out.println();
             System.out.print("Your Choice: ");
             choice = scan.nextInt();
-            parseChoice();
             System.out.println();
+            parseChoice();
+            pressEnter();
         }
+    }
+
+    public static void pressEnter() {
+        if (loginFlag == LoginFlags.EXIT) {
+            return;
+        }
+        System.out.println();
+        System.out.println();
+        System.out.print("Press Enter To Continue");
+        scan.nextLine();
+        scan.nextLine();
     }
 
     public static void clearScreen() throws InterruptedException, IOException {
@@ -83,7 +95,7 @@ public class Academy {
         }
     }
 
-    private static void parseChoice() {
+    private static void parseChoice() throws InterruptedException, IOException {
         switch (loginFlag) {
             case LoginFlags.NO_LOGIN:
                 parseFirstTimeLogin();
@@ -101,7 +113,13 @@ public class Academy {
         switch (choice) {
             case 1:
                 Session createdSession = Session.createSession(loggedInInstructor);
+                if (createdSession == null) {
+                    System.out.println("Aborted");
+                    return;
+                }
                 loggedInInstructor.addReservation(createdSession);
+                System.out.println();
+                System.out.println("Class Session Successfully Placed!");
                 break;
             case 2:
                 loggedInInstructor.listReservations();
@@ -120,6 +138,7 @@ public class Academy {
                 }
 
                 loggedInInstructor.editReservation(selectedEditSession, newSession);
+                System.out.println("Class Session Successfully Edited!");
                 break;
             case 4:
                 Session selectedRemoveSession = promptSession(Instructor.class);
@@ -129,6 +148,7 @@ public class Academy {
                 }
 
                 loggedInInstructor.removeReservation(selectedRemoveSession);
+                System.out.println("Class Session Successfully Removed!");
                 break;
             case 5:
                 logOut();
@@ -142,6 +162,7 @@ public class Academy {
             return null;
         }
 
+        System.out.println();
         return confirmSession(selectedSession) ? selectedSession : null;
     }
 
@@ -159,14 +180,19 @@ public class Academy {
     private static <T> Session promptSession(Class<T> type) {
         Student student = null;
         Instructor instructor = null;
+        boolean hasClasses = false;
 
         if (type.equals(Student.class)) {
             student = loggedInStudent;
-            student.listReservations();
+            hasClasses = student.listReservations();
         }
         else if (type.equals(Instructor.class)) {
             instructor = loggedInInstructor;
-            instructor.listReservations();
+            hasClasses = instructor.listReservations();
+        }
+
+        if (!hasClasses) {
+            return null;
         }
 
         System.out.print("Enter Session number(0 to abort): ");
@@ -179,12 +205,14 @@ public class Academy {
         switch (choice) {
             case 1:
                 Session selectedSession = selectReservedSession();
+                System.out.println();
                 if (!confirmSession(selectedSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
 
                 loggedInStudent.addReservation(selectedSession);
+                System.out.println("Successfully Added Class!");
                 break;
             case 2:
                 loggedInStudent.listReservations();
@@ -202,15 +230,18 @@ public class Academy {
                 }
 
                 loggedInStudent.editReservation(selectedEditSession, newSelectedSession);
+                System.out.println("Successfully Edited Class!");
                 break;
             case 4:
                 Session selectedRemoveSession = promptSession(Student.class);
+                System.out.println();
                 if (!confirmSession(selectedRemoveSession)) {
                     System.out.println("Aborted.");
                     return;
                 }
 
                 loggedInStudent.removeReservation(selectedRemoveSession);
+                System.out.println("Successfully Removed Class!");
                 break;
             case 5:
                 logOut();
@@ -226,12 +257,12 @@ public class Academy {
 
     private static Session selectReservedSession() {
         Session.listReservedSessions();
-        System.out.println("Select your preferred session: ");
+        System.out.print("Select your preferred session: ");
         int selection = scan.nextInt();
         return Session.getReservedSession(selection - 1);
     }
 
-    private static void parseFirstTimeLogin() {
+    private static void parseFirstTimeLogin() throws InterruptedException, IOException {
         switch (choice) {
             case 1:
                 Registration.performRegistration();
@@ -240,30 +271,26 @@ public class Academy {
                 logIn();
                 break;
             case 3:
-                System.out.println("Infinity Academy is an academy where you learn infinite things");
-                break;
-            case 4:
-                System.out.println("our team has 4 people, you may visit us on our github project at: https://github.com/jim-low/infinity-academy");
-                System.out.println("# shame less self sponser");
-                break;
+                exitSystem();
         }
     }
 
     private static void logIn() {
         String accountType = Registration.promptAccountType();
+        System.out.println();
         String[] credentials = promptAccountCredentials();
 
         if (accountType.equals("Student")) {
-            loggedInStudent = Person.search(credentials[0], credentials[1], Student.class);
+            loggedInStudent = Student.search(credentials[0], credentials[1], Student.class);
             loginFlag = loggedInStudent != null ? LoginFlags.STUDENT_LOGIN : LoginFlags.NO_LOGIN;
         }
         else if (accountType.equals("Instructor")) {
-            loggedInInstructor = Person.search(credentials[0], credentials[1], Instructor.class);
+            loggedInInstructor = Instructor.search(credentials[0], credentials[1], Instructor.class);
             loginFlag = loggedInInstructor != null ? LoginFlags.INSTRUCTOR_LOGIN : LoginFlags.NO_LOGIN;
         }
 
         if (loginFlag == LoginFlags.NO_LOGIN) {
-            System.out.printf("Could not find registration with name '%s' in our database.\n", credentials[0]);
+            System.out.printf("Could not find registration with email '%s' in our database.\n", credentials[0]);
             return;
         }
 
@@ -272,7 +299,7 @@ public class Academy {
 
     private static String[] promptAccountCredentials() {
         System.out.print("Enter your email: ");
-        String email = scan.nextLine();
+        String email = scan.next();
 
         System.out.print("Enter your password: ");
         String password = new String(System.console().readPassword());
@@ -285,6 +312,24 @@ public class Academy {
         System.out.println(" \\ \\/\\/ / -_) / _/ _ \\ '  \\/ -_) |  _/ _ \\  | || ' \\|  _| | ' \\| |  _| || |  / _ \\/ _/ _` / _` / -_) '  \\ || |");
         System.out.println("  \\_/\\_/\\___|_\\__\\___/_|_|_\\___|  \\__\\___/ |___|_||_|_| |_|_||_|_|\\__|\\_, | /_/ \\_\\__\\__,_\\__,_\\___|_|_|_\\_, |");
         System.out.println("                                                                      |__/                               |__/");
+
+        if (loginFlag == LoginFlags.NO_LOGIN) {
+            return;
+        }
+
+        Person loggedInPerson = loggedInStudent == null ? loggedInInstructor : loggedInStudent;
+        System.out.println();
+        System.out.printf("                    Name: %s\n", loggedInPerson.getName());
+        System.out.println();
+    }
+
+    private static void exitSystem() {
+        System.out.println(" ________             __                                                         __");
+        System.out.println("/_  __/ /  ___ ____  / /__  __ _____  __ __  _  _____ ______ __  __ _  __ ______/ /");
+        System.out.println(" / / / _ \\/ _ `/ _ \\/  '_/ / // / _ \\/ // / | |/ / -_) __/ // / /  ' \\/ // / __/ _ \\");
+        System.out.println("/_/ /_//_/\\_,_/_//_/_/\\_\\  \\_, /\\___/\\_,_/  |___/\\__/_/  \\_, / /_/_/_/\\_,_/\\__/_//_/");
+        System.out.println("                          /___/                         /___/");
+        loginFlag = LoginFlags.EXIT;
     }
 }
 

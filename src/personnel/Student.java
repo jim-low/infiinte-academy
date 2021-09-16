@@ -61,7 +61,7 @@ public class Student extends Person implements Reservation {
     public static Student search(String email, String password){
         Student found = null;
         for (Student student : studentList) {
-            if(student.getName().equals(email) && student.getPassword().equals(password)){
+            if(student.getEmail().equals(email) && student.getPassword().equals(password)){
                 found = student;
                 break;
             }
@@ -82,15 +82,23 @@ public class Student extends Person implements Reservation {
     }
 
     @Override
-    public void listReservations(){
-        //list session array
+    public boolean listReservations(){
+        if (reservedClasses.size() == 0) {
+            System.out.println("You do not have any reserved classes yet.");
+            return false;
+        }
         System.out.print("          RESERVATION LIST           \n");
         System.out.print("-------------------------------------\n");
+        System.out.println();
         for (int i = 0; i < reservedClasses.size() ; i++) {
-                System.out.print(i+1 +".");
-                System.out.println(" " +reservedClasses.get(i));
-            }
-            System.out.print("--------------------------------\n");
+            System.out.print((i + 1) + ". ");
+            System.out.println("Slot: " + reservedClasses.get(i).getSlot().showTime());
+            System.out.println("Course Name: " + reservedClasses.get(i).getCourse().getCourseName());
+            System.out.println("Instructor In Charge: " + reservedClasses.get(i).getInstructor().getName());
+            System.out.println();
+        }
+        System.out.print("-------------------------------------\n");
+        return true;
     }
 
     @Override
@@ -118,9 +126,9 @@ public class Student extends Person implements Reservation {
 
     @Override
     public String toString(){
-        return "Instructor ID      :" + studentID +" \n"
-             + "Instructor Name    : " + this.getName() +" \n"
-             + "Instructor email   : " + this.getEmail()+" \n"
-             + enrolledCourses.toString();
+        return "Student ID      : " + studentID +" \n"
+             + "Student Name    : " + this.getName() +" \n"
+             + "Student email   : " + this.getEmail()+" \n"
+             + "Enrolled Classes: " + enrolledCourses.toString();
     }
 }

@@ -7,7 +7,6 @@ public class Person {
     private String password;
     private String gender;
     private String email;
-    private boolean paidFee;
     private Card card;
 
     public Person(){
@@ -15,7 +14,7 @@ public class Person {
     }
 
     public Person(Person person){
-        this(person.name, person.password, person.gender, person.email, null);
+        this(person.name, person.password, person.gender, person.email, person.card);
     }
 
     public Person(String name) {
@@ -23,8 +22,7 @@ public class Person {
     }
 
     public Person(String name, String password, String email) {
-        this(name, "","", email, null);
-
+        this(name, password ,"", email, null);
     }
 
     public Person(String name,String password, String gender, String email, Card card) {
@@ -33,7 +31,6 @@ public class Person {
         this.password = password;
         this.email = email;
         this.card = card;
-        this.paidFee = false;
     }
 
     public String getName() {
@@ -62,14 +59,6 @@ public class Person {
 
     public String getGender() {
         return gender;
-    }
-
-    public boolean hasPaidFee(){
-        return false;
-    }
-
-    public void setPaidFee(boolean paidFee) {
-        this.paidFee = paidFee;
     }
 
     public Card getCard() {
