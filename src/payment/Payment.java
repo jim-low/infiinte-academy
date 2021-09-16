@@ -1,75 +1,56 @@
 package payment;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import java.util.Random;
 import management.Academy;
-import personnel.Instructor;
-import personnel.Student;
-import system.Course;
 
 public interface Payment {
-    public static <T> boolean performPayment(Card card, double amount, Class<T> type) {
-        String transactionCode = "";
-        if (type.equals(Course.class)) {
-            String transcode = Code.CRE.toString();
-        } else if (type.equals(Student.class)) {
-            String transcode = Code.STD.toString();
-        }
-        else if (type.equals(Instructor.class)) {
-            String transcode = Code.INS.toString();
-        }
-        int counter = 3;
-        String accountNo = "";
-        while(counter > 0) {
-            System.out.print("Enter your account number : ");
-            accountNo = Academy.scan.next();
-            System.out.print("\nConfirm your account number : ");
-            String confirmationAccountNo = Academy.scan.next();
-            
-            if(!Card.validateAccount(accountNo, confirmationAccountNo)) {
-                System.out.println("Your account number does not match. Please kindly try again.");
-                counter--;
-            }
-        }
-        
-        counter = 3;
-        int cvcNo = 0;
-        while(counter > 0) {
-             System.out.print("Enter your CVC number : ");
-            cvcNo = Academy.scan.nextInt();
-            System.out.print("\nConfirm your CVC number : ");
-            int confirmationCvcNo = Academy.scan.nextInt();
-            
-            if(!Card.validateCvcNo(cvcNo, confirmationCvcNo)) {
-                System.out.println("Your CVC numbers do not match. Please kindly try again.");
-                counter--;
-            }
+    public static <T> boolean performPayment(Card card, double amount, Class<T> type) throws InterruptedException {
+        String accountNumber = Card.promptAccountNumber();
+        if (!Card.validateAccount(card.getAccountNumber(), accountNumber)) {
+            System.out.println("Your account number does not match.");
+            return false;
         }
 
-        System.out.printf("Enter the amount to pay (RM) : ");
-        double paidAmount = Academy.scan.nextDouble();
+        int cvcNumber = Card.promptCvcNumber();
+        if (!Card.validateCvcNo(card.getCvcNo(), cvcNumber)) {
+            System.out.println("Your CVC number does not match.");
+            return false;
+        }
 
-        counter = 3;
+        System.out.println();
+        System.out.printf("Your Current Balance: RM%.2f\n", card.getBalance());
+        System.out.printf("Your Registration Fee: RM%.2f\n", amount);
+        System.out.print("Confirm payment? (y/n) ");
+        if (Academy.scan.next().charAt(0) != 'y') {
+            System.out.println("Aborting Payment.");
+            return false;
+        }
+
+        card.cashOut(amount);
+
+        System.out.println();
+        timeDelay(2);
+        System.out.println("In progress...");
+        timeDelay(2);
+        System.out.println("Done\n");
+
         String otp = generateOTP();
-        while (counter > 0) {
-            System.out.printf("Your OTP code : %s\n", otp);
-            System.out.print("Enter the OTP code as shown above >>> ");
-            String confirmationOtp = Academy.scan.next();
-
-            if (!otp.equals(confirmationOtp)) {
-                System.out.println("Your OTP codes do not match. Please kindly try again.");
-                counter--;
-            }
+        System.out.println("Enter the OTP Code as shown: " + otp);
+        System.out.print("OTP Code: ");
+        String enteredOTP = Academy.scan.next();
+        if (!enteredOTP.equals(otp)) {
+            System.out.println("OTP Codes do not match. Aborting Payment");
+            return false;
         }
-        
-        return amount == paidAmount;
+
+        return true;
     }
-    
+
     public static double generateRandomAmount(double min, double max) {
         Random r = new Random();
         return (min + (max - min) * r.nextDouble());
     }
-    
+
     public static double generateRandomAmount() {
         final double MIN = 250;
         final double MAX = 1750;
@@ -80,26 +61,21 @@ public interface Payment {
     public static String generateOTP() {
         String characters = "ABCDEFGabcdefg1234567"; //character involve
         String otp = "";                     //otp string
-        TimeDelay();
-        String text = "";           
         for (int i = 0; i < 7; i++) { //generate otp
-            int index = (int)Math.random()*characters.length();
+            int index = (int)(Math.random()*characters.length());
             otp += characters.charAt(index);
         }
         return otp;
     }
 
-    public static void TimeDelay() {
+    public static void timeDelay(int seconds) throws InterruptedException {
         try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
+            Thread.sleep(seconds * 1000);
         }
-        System.out.println("In progress...");
-        try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
+        catch (Exception e) {
+            System.out.println("Something bad happened :(");
+            System.out.println("But thats not my problem");
         }
-        System.out.println("Done\n");
     }
 }
 

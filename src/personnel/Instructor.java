@@ -13,17 +13,14 @@ public class Instructor extends Person implements Reservation {
     private String instructorID;
     private static int nextInstructorID = 1000;
 
+    public Instructor(Person person){
+        this(person, null);
+    }
+
     public Instructor(Person person, Course course){
-        this(person,"",course);
-    }
-
-    public Instructor(Person person, String instructorID){
-        this(person, instructorID, null);
-    }
-
-    public Instructor(Person person, String instructorID, Course course){
         super(person);
-        this.instructorID = CODE.INS.toString()+nextInstructorID;;
+        this.instructorID = SystemCodes.INS.toString() + nextInstructorID;;
+        this.course = course;
         ++nextInstructorID;
     }
 
@@ -64,7 +61,7 @@ public class Instructor extends Person implements Reservation {
     public static Instructor search(String email, String password){
         Instructor found = null;
         for (Instructor instructor : instructorList) {
-            if(instructor.getName().equals(email) && instructor.getPassword().equals(password)){
+            if(instructor.getEmail().equals(email) && instructor.getPassword().equals(password)){
                 found = instructor;
                 break;
             }
@@ -87,21 +84,33 @@ public class Instructor extends Person implements Reservation {
         this.course = course;
     }
 
-    @Override
-    public void addReservation(Session session){
-        classes.add(session);
-
+    public String getID() {
+        return this.instructorID;
     }
 
     @Override
-    public void listReservation(){
-        System.out.print("          RESERVATION LIST           \n");
-        System.out.print("-------------------------------------\n");
+    public void addReservation(Session session){
+        classes.add(session);
+        Session.addReservedSession(session);
+    }
+
+    @Override
+    public boolean listReservations(){
+        if (classes.size() == 0) {
+            System.out.println("You do not have any reserved sessions yet.");
+            return false;
+        }
+        System.out.print("                           RESERVATION LIST\n");
+        System.out.print("--------------------------------------------------------------------\n");
+        System.out.println();
         for (int i = 0; i < classes.size() ; i++) {
-                System.out.print(i+1 +".");
-                System.out.println(" " +classes.get(i));
-            }
-        System.out.print("-------------------------------------\n");
+            System.out.print((i + 1) + ". ");
+            System.out.println("Time Slot: " + classes.get(i).getSlot().showTime());
+            System.out.println("Course Name: " + classes.get(i).getCourse().getCourseName());
+            System.out.println();
+        }
+        System.out.print("--------------------------------------------------------------------\n");
+        return true;
     }
 
     public Session getReservation(int index){
@@ -118,12 +127,12 @@ public class Instructor extends Person implements Reservation {
         }
         classes.set(index, session);
     }
-    
+
     public void editReservation(Session oldSession, Session newSession){
         int oldSessionIndex = classes.indexOf(oldSession);
         editReservation(oldSessionIndex, newSession);
     }
-    
+
     @Override
     public void removeReservation(Session session){
         classes.remove(session);

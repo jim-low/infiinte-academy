@@ -1,6 +1,5 @@
 package personnel;
 
-import management.Academy;
 import payment.Card;
 
 public class Person {
@@ -8,32 +7,30 @@ public class Person {
     private String password;
     private String gender;
     private String email;
-    private boolean paidFee;
     private Card card;
 
     public Person(){
-        this("","","", "");
+        this("","","", "", null);
     }
 
     public Person(Person person){
-        this(person.name, person.password, person.gender, person.email);
+        this(person.name, person.password, person.gender, person.email, person.card);
     }
 
     public Person(String name) {
-        this(name, "", "","");
+        this(name, "", "","", null);
     }
 
     public Person(String name, String password, String email) {
-        this(name, "","", email);
-
+        this(name, password ,"", email, null);
     }
 
-    public Person(String name,String password, String gender, String email) {
+    public Person(String name,String password, String gender, String email, Card card) {
         this.name = name;
         this.gender = gender;
         this.password = password;
         this.email = email;
-        this.paidFee = false;
+        this.card = card;
     }
 
     public String getName() {
@@ -62,14 +59,6 @@ public class Person {
 
     public String getGender() {
         return gender;
-    }
-
-    public boolean hasPaidFee(){
-        return false;
-    }
-
-    public void setPaidFee(boolean paidFee) {
-        this.paidFee = paidFee;
     }
 
     public Card getCard() {

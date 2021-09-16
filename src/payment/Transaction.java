@@ -27,9 +27,8 @@ public abstract class Transaction {
         String formattedDate = myDateObj.format(myFormatObj);
         return formattedDate;
     }
-    
+
     public static void calculateDateDifference(String startDate, String endDate) {
-  
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         try {
             Date d1 = sdf.parse(startDate);
@@ -44,18 +43,22 @@ public abstract class Transaction {
             long diffInMins = TimeUnit.MILLISECONDS.toMinutes(diffInTime) % 60;
 
             long diffInHrs = TimeUnit.MILLISECONDS.toHours(diffInTime) % 24;
-            
+
             long diffInDays = TimeUnit.MILLISECONDS.toDays(diffInTime) % 365;
 
             System.out.print("Difference" + " between two dates is: ");
 
             // Print result
             System.out.println(diffInDays + " days, "
-                    + diffInHrs + " hours, " 
+                    + diffInHrs + " hours, "
                     + diffInMins + " minutes, "
                     + diffInSec + " seconds");
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public double getTransactionAmount() {
+        return amount;
     }
 }

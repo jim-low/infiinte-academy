@@ -3,25 +3,52 @@ package management;
 import personnel.*;
 import system.Course;
 import payment.Payment;
+import payment.Receipt;
+
+import java.io.IOException;
+
+import payment.Card;
 
 public interface Registration {
-    public static void performRegistration() {
+    public static void performRegistration() throws InterruptedException, IOException {
         String accountType = promptAccountType();
-        Person basicInfo = setupPerson();
+        System.out.println();
+        Person person = setupPerson();
 
+        System.out.println();
         System.out.println("You will now be going through the payment process.");
-        boolean paid = Payment.performPayment(accountType, Payment.generateRandomAmount());
+        boolean paid = false;
+
+        if (accountType.equals("Student")) {
+            paid = Payment.performPayment(person.getCard(), Payment.generateRandomAmount(), Student.class);
+        }
+        else {
+            paid = Payment.performPayment(person.getCard(), Payment.generateRandomAmount(), Instructor.class);
+        }
+
         if (!paid) {
-            System.out.println("Payment Unsuccessful. Account not registered.");
             return;
         }
 
+        System.out.println();
+        System.out.println("Payment Successful!");
+
         if (accountType.equals("Student")) {
-            Student student = setupStudent(basicInfo);
+            Student student = new Student(person);
             Student.add(student);
+            Payment.timeDelay(1);
+            System.out.println("Generating Receipt...");
+            Payment.timeDelay(2);
+            Academy.clearScreen();
+            Receipt.generateRegistrationReceipt(student);
         } else {
-            Instructor instructor = setupInstructor(basicInfo);
+            Instructor instructor = new Instructor(person);
             Instructor.add(instructor);
+            Payment.timeDelay(1);
+            System.out.println("Generating Receipt...");
+            Payment.timeDelay(2);
+            Academy.clearScreen();
+            Receipt.generateRegistrationReceipt(instructor);
         }
     }
 
@@ -29,7 +56,6 @@ public interface Registration {
         System.out.println("Select Account Type:-");
         System.out.println("1. Instructor");
         System.out.println("2. Student");
-        System.out.println();
         System.out.print("Your Account Type: ");
 
         int type = Academy.scan.nextInt();
@@ -42,42 +68,35 @@ public interface Registration {
         return type == 1 ?  "Instructor" : "Student";
     }
 
-    private static Instructor setupInstructor(Person person) {
-        System.out.print("Now you will be brought to setup your course.");
-        Course course = Course.setupCourse();
-
-        return new Instructor(person, course);
-    }
-
-    static void printQualificationsMenu() {
-        System.out.println("Select your latest qualification:-");
-        System.out.println("1. SPM");
-        System.out.println("2. Diploma");
-        System.out.println("3. Degree");
-        System.out.println("4. Masters");
-        System.out.println("5. PhD");
-    }
-
-    private static Student setupStudent(Person person) {
-        return new Student(person);
-    }
-
     private static Person setupPerson() {
         System.out.print("Enter your name: ");
-        String name = Academy.scan.nextLine();
+        String name = Academy.scan.next();
 
+        System.out.print("Enter your email: ");
+        Academy.scan.nextLine();
+        String email = Academy.scan.next();
+
+        System.out.print("Enter your password: ");
+        String password = new String(System.console().readPassword());
+
+        System.out.println();
         System.out.println("Select your gender: ");
         System.out.println("1. Male");
         System.out.println("2. Female");
-        System.out.println();
         System.out.print("Your gender: ");
+        Academy.scan.nextLine();
         String gender = Academy.scan.nextInt() == 1 ? "Male" : "Female";
 
-        System.out.print("Enter your email: ");
-        String email = Academy.scan.next();
+        System.out.println();
+        Card card = Card.setupCard();
 
-        return new Person(name, gender, email);
+        if (card == null) {
+            System.out.println("Card Details Are Invalid!!");
+            System.out.println();
+            card = Card.setupCard();
+        }
+
+        return new Person(name, password, gender, email, card);
     }
-
 }
 

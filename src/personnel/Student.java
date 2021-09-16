@@ -12,9 +12,9 @@ public class Student extends Person implements Reservation {
     private String studentID;
     private static int nextStudentID = 1000;
 
-    public Student(Person person, String studentID){
+    public Student(Person person){
         super(person);
-        this.studentID = CODE.STD.toString()+nextStudentID;
+        this.studentID = SystemCodes.STD.toString() + nextStudentID;
         ++nextStudentID;
     }
 
@@ -50,14 +50,6 @@ public class Student extends Person implements Reservation {
         }
     }
 
-    @Override
-    public String toString(){
-        return "Instructor ID      :" + studentID +" \n"
-             + "Instructor Name    : " + this.getName() +" \n"
-             + "Instructor email   : " + this.getEmail()+" \n"
-             + enrolledCourses.toString();
-    }
-
     public static void add(Student student){
         studentList.add(student);
     }
@@ -69,29 +61,12 @@ public class Student extends Person implements Reservation {
     public static Student search(String email, String password){
         Student found = null;
         for (Student student : studentList) {
-            if(student.getName().equals(email) && student.getPassword().equals(password)){
+            if(student.getEmail().equals(email) && student.getPassword().equals(password)){
                 found = student;
                 break;
             }
         }
         return found;
-    }
-
-    @Override
-    public void addReservation(Session session){
-        reservedClasses.add(session);
-    }
-
-    @Override
-    public void listReservation(){
-        //list session array
-        System.out.print("          RESERVATION LIST           \n");
-        System.out.print("-------------------------------------\n");
-        for (int i = 0; i < reservedClasses.size() ; i++) {
-                System.out.print(i+1 +".");
-                System.out.println(" " +reservedClasses.get(i));
-            }
-            System.out.print("--------------------------------\n");
     }
 
     public Session getReservation(int index){
@@ -102,13 +77,39 @@ public class Student extends Person implements Reservation {
     }
 
     @Override
+    public void addReservation(Session session){
+        reservedClasses.add(session);
+    }
+
+    @Override
+    public boolean listReservations(){
+        if (reservedClasses.size() == 0) {
+            System.out.println("You do not have any reserved classes yet.");
+            return false;
+        }
+        System.out.print("          RESERVATION LIST           \n");
+        System.out.print("-------------------------------------\n");
+        System.out.println();
+        for (int i = 0; i < reservedClasses.size() ; i++) {
+            System.out.print((i + 1) + ". ");
+            System.out.println("Slot: " + reservedClasses.get(i).getSlot().showTime());
+            System.out.println("Course Name: " + reservedClasses.get(i).getCourse().getCourseName());
+            System.out.println("Instructor In Charge: " + reservedClasses.get(i).getInstructor().getName());
+            System.out.println();
+        }
+        System.out.print("-------------------------------------\n");
+        return true;
+    }
+
+    @Override
     public void editReservation(int index, Session session){
         if(index < 0 || index >= reservedClasses.size() ){
             return;
         }
         reservedClasses.set(index, session);
     }
-    
+
+    @Override
     public void editReservation(Session oldSession, Session newSession){
         int oldSessionIndex = reservedClasses.indexOf(oldSession);
         editReservation(oldSessionIndex, newSession);
@@ -117,5 +118,17 @@ public class Student extends Person implements Reservation {
     @Override
     public void removeReservation(Session session){
         reservedClasses.remove(session);
+    }
+
+    public String getID() {
+        return this.studentID;
+    }
+
+    @Override
+    public String toString(){
+        return "Student ID      : " + studentID +" \n"
+             + "Student Name    : " + this.getName() +" \n"
+             + "Student email   : " + this.getEmail()+" \n"
+             + "Enrolled Classes: " + enrolledCourses.toString();
     }
 }
