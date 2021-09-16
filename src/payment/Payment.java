@@ -4,7 +4,7 @@ import java.util.Random;
 import management.Academy;
 
 public interface Payment {
-    public static <T> boolean performPayment(Card card, double amount, Class<T> type) throws InterruptedException {
+    public static <T> boolean performPayment(Card card, double amount) throws InterruptedException {
         String accountNumber = Card.promptAccountNumber();
         if (!Card.validateAccount(card.getAccountNumber(), accountNumber)) {
             System.out.println("Your account number does not match.");

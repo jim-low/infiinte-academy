@@ -12,6 +12,8 @@ public class Instructor extends Person implements Reservation {
     private static ArrayList<Instructor> instructorList = new ArrayList<>();
     private String instructorID;
     private static int nextInstructorID = 1000;
+    
+    public static final double INSTRUCTOR_REGISTRATION_FEE = 400;
 
     public Instructor(Person person){
         this(person, null);
