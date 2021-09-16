@@ -23,7 +23,7 @@ public class Instructor extends Person implements Reservation {
 
     public Instructor(Person person, String instructorID, Course course){
         super(person);
-        this.instructorID = Code.INS.toString()+nextInstructorID;;
+        this.instructorID = CODE.INS.toString()+nextInstructorID;;
         ++nextInstructorID;
     }
 
@@ -52,15 +52,15 @@ public class Instructor extends Person implements Reservation {
     public void removeQualification(String qualification){
         qualifications.remove(qualification);
     }
-    
+
     public static void add(Instructor instructor){
         instructorList.add(instructor);
     }
-    
+
     public static void remove(Instructor instructor){
         instructorList.remove(instructor);
-    }   
-    
+    }
+
     public static Instructor search(String email, String password){
         Instructor found = null;
         for (Instructor instructor : instructorList) {
@@ -71,14 +71,14 @@ public class Instructor extends Person implements Reservation {
         }
         return found;
     }
-     
+
     public String toString(){
         return "Instructor ID      :" + instructorID +" \n"
              + "Instructor Name    : " + this.getName() +" \n"
              + "Instructor email   : " + this.getEmail()+" \n"
              + course.toString();
     }
-    
+
      public Course getCourse() {
         return course;
     }
@@ -103,14 +103,14 @@ public class Instructor extends Person implements Reservation {
             }
         System.out.print("-------------------------------------\n");
     }
-    
+
     public Session getReservation(int index){
         if(index < 0 || index >= classes.size() ){
             return null;
         }
         return classes.get(index);
     }
-   
+
     @Override
     public void editReservation(int index, Session session){
         if( index <0 || index >= classes.size()){
@@ -118,7 +118,12 @@ public class Instructor extends Person implements Reservation {
         }
         classes.set(index, session);
     }
-
+    
+    public void editReservation(Session oldSession, Session newSession){
+        int oldSessionIndex = classes.indexOf(oldSession);
+        editReservation(oldSessionIndex, newSession);
+    }
+    
     @Override
     public void removeReservation(Session session){
         classes.remove(session);

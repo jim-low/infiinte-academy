@@ -14,7 +14,7 @@ public class Student extends Person implements Reservation {
 
     public Student(Person person, String studentID){
         super(person);
-        this.studentID = Code.STD.toString()+nextStudentID;
+        this.studentID = CODE.STD.toString()+nextStudentID;
         ++nextStudentID;
     }
 
@@ -49,7 +49,7 @@ public class Student extends Person implements Reservation {
             }
         }
     }
-    
+
     @Override
     public String toString(){
         return "Instructor ID      :" + studentID +" \n"
@@ -57,15 +57,15 @@ public class Student extends Person implements Reservation {
              + "Instructor email   : " + this.getEmail()+" \n"
              + enrolledCourses.toString();
     }
-    
+
     public static void add(Student student){
         studentList.add(student);
     }
-    
+
     public static void remove(Student student){
         studentList.remove(student);
     }
-    
+
     public static Student search(String email, String password){
         Student found = null;
         for (Student student : studentList) {
@@ -93,20 +93,25 @@ public class Student extends Person implements Reservation {
             }
             System.out.print("--------------------------------\n");
     }
-    
+
     public Session getReservation(int index){
         if(index < 0 || index >= reservedClasses.size() ){
             return null;
         }
         return reservedClasses.get(index);
     }
-    
+
     @Override
     public void editReservation(int index, Session session){
         if(index < 0 || index >= reservedClasses.size() ){
             return;
         }
         reservedClasses.set(index, session);
+    }
+    
+    public void editReservation(Session oldSession, Session newSession){
+        int oldSessionIndex = reservedClasses.indexOf(oldSession);
+        editReservation(oldSessionIndex, newSession);
     }
 
     @Override

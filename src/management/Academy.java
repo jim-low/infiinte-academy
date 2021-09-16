@@ -258,7 +258,7 @@ public class Academy {
             return;
         }
 
-        System.out.println("Successfully logged in!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("Successfully logged in!");
     }
 
     private static String[] promptAccountCredentials() {
