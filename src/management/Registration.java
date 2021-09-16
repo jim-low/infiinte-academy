@@ -1,7 +1,6 @@
 package management;
 
 import personnel.*;
-import system.Course;
 import payment.Payment;
 import payment.Receipt;
 
@@ -17,14 +16,8 @@ public interface Registration {
 
         System.out.println();
         System.out.println("You will now be going through the payment process.");
-        boolean paid = false;
-
-        if (accountType.equals("Student")) {
-            paid = Payment.performPayment(person.getCard(), Payment.generateRandomAmount(), Student.class);
-        }
-        else {
-            paid = Payment.performPayment(person.getCard(), Payment.generateRandomAmount(), Instructor.class);
-        }
+        double amount = accountType.equals("Student") ? Student.STUDENT_REGISTRATION_FEE : Instructor.INSTRUCTOR_REGISTRATION_FEE;
+        boolean paid = Payment.performPayment(person.getCard(), amount);
 
         if (!paid) {
             return;
@@ -68,7 +61,7 @@ public interface Registration {
         return type == 1 ?  "Instructor" : "Student";
     }
 
-    private static Person setupPerson() {
+    private static Person setupPerson() throws IOException {
         System.out.print("Enter your name: ");
         String name = Academy.scan.next();
 
@@ -77,7 +70,7 @@ public interface Registration {
         String email = Academy.scan.next();
 
         System.out.print("Enter your password: ");
-        String password = new String(System.console().readPassword());
+        String password = Academy.scan.next();
 
         System.out.println();
         System.out.println("Select your gender: ");

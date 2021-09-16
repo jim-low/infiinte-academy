@@ -11,6 +11,8 @@ public class Student extends Person implements Reservation {
     private static ArrayList<Student> studentList = new ArrayList<>();
     private String studentID;
     private static int nextStudentID = 1000;
+    
+    public static final double STUDENT_REGISTRATION_FEE = 150;
 
     public Student(Person person){
         super(person);

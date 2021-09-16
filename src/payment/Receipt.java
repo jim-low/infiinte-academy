@@ -2,6 +2,7 @@ package payment;
 
 import personnel.*;
 import system.Course;
+import system.Session;
 import system.SystemCodes;
 
 public class Receipt {
@@ -31,8 +32,8 @@ public class Receipt {
         System.out.println("\n------------------------------------ Welcome ----------------------------------------------");
         System.out.println();
         System.out.println("You have successfully registered as a Student in Infinity Academy!!!\n");
-        System.out.println("Registration fee: RM" + card.getTransactionAmount());
-        System.out.println("Paid fee: RM" + "xxxxx");
+        System.out.println("Registration fee: RM" + Student.STUDENT_REGISTRATION_FEE);
+        System.out.println("Paid fee: RM" + Student.STUDENT_REGISTRATION_FEE);
         System.out.printf("Account Balance: RM%.2f\n", card.getBalance());
         System.out.println("\n----------------------------- Thank You For Registering -----------------------------------\n");
         System.out.println("Note: This receipt is computer generated and no signature is required.\n\n");
@@ -62,8 +63,8 @@ public class Receipt {
         System.out.println("\tAccount Number: " + card.getAccountNumber());
         System.out.println("\n------------------------------------ Welcome ----------------------------------------------\n");
         System.out.println("You have successfully registered as an Instructor in Infinity Academy!!!\n");
-        System.out.println("Registration fee: RM" + card.getTransactionAmount());
-        System.out.println("Paid fee: RM" + "xxxxx");
+        System.out.println("Registration fee: RM" + Instructor.INSTRUCTOR_REGISTRATION_FEE);
+        System.out.println("Paid fee: RM" + Instructor.INSTRUCTOR_REGISTRATION_FEE);
         System.out.printf("Account Balance: RM%.2f\n", card.getBalance());
         System.out.println("\n----------------------------- Thank You For Registering -----------------------------------\n");
         System.out.println("Note: This receipt is computer generated and no signature is required.\n\n");
@@ -71,24 +72,32 @@ public class Receipt {
         ++receiptCode;
     }
 
-    private static void generateCourseReceipt(Person person, String reference) {
+    public static void generateCourseReceipt(Student student, Session[] sessions) {
         String receiptID = SystemCodes.RPT.toString() + receiptCode;
-        System.out.println("\t\t\t\tCourse receipt\n");
-        System.out.println("\t\t\t\t\t\t\t\tReceipt ID :" + receiptID);
-        System.out.println("\t\t\t\t\t\t\t\tDate : " + Transaction.createDate());
-        System.out.println("\t\t\t\t\t\t\t\tReference ID : " + reference);
-        System.out.println("Duration of payment : " + "xxxx\n");  //not done yet
-        System.out.println("Payment method : " + "Online\n");
-        System.out.println("Receipt for: \n" + "\tMr/Mrs" + person.getName() + "\n"
-                + "\tEmail : " + person.getEmail() +"\n"
-                + "\tAccount number : " + person.getCard().getAccountNumber()  +"\n"); //change in card
+        System.out.println("\t\t\t\tCourse Receipt\n");
+        System.out.println("\t\t\t\t\t\t\t\tReceipt ID:" + receiptID);
+        System.out.println("\t\t\t\t\t\t\t\tDate: " + Transaction.createDate());
+        System.out.println("\t\t\t\t\t\t\t\tReference ID: " + student.getID());
+        System.out.println("Payment Method: " + "Online\n");
+        System.out.println("Receipt for:-");
+        System.out.printf("\t%s: %s\n", (student.getGender().equals("Male") ? "Mr" : "Ms"), student.getName());
+        System.out.println("\tAccount Number: " + student.getCard().getAccountNumber());
         System.out.println("\n------------------------------------Welcome----------------------------------------------\n");
-        System.out.println("You have suceesfully purchased the courses in Infinity Academy\n");
-        System.out.printf("%-45s  %-13s  %-30s\n","Course","Course Fees","Field of courses");
-        ((Student)person).listReservations();
+        System.out.println("You have successfully purchased the following courses in Infinity Academy!!!");
+        System.out.printf("   %-40s %s\n", "Course Name", "Course Fee");
+        double total = 0;
+        for (int i = 0; i < sessions.length; i++) {
+            Course course = sessions[i].getCourse();
+            System.out.printf("%d. %-40s RM%.2f\n", (i+1), course.getCourseName(), course.getCourseFee());
+            double commission = course.getCourseFee() * 0.05;
+            sessions[i].getInstructor().getCard().cashIn(commission);
+            total += course.getCourseFee();
+        }
+        System.out.println();
+        System.out.printf("Total: RM%.2f\n", total);
+        student.getCard().cashOut(total);
+        System.out.printf("Account Balance: RM%.2f\n", student.getCard().getBalance());
         System.out.println("\n-------------------------------Enjoy your courses-----------------------------------------\n");
-        System.out.println("Total : RM" + "xxx");
-        System.out.println("Account Balance : " +person.getCard().getBalance() + "\n");
         System.out.println("Note: This receipt is computer generated and no signature is required.");
         ++receiptCode;
     }

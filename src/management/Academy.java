@@ -1,7 +1,9 @@
 package management;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+import payment.Receipt;
 
 import personnel.*;
 import system.*;
@@ -204,16 +206,12 @@ public class Academy {
     private static void parseStudentChoice() {
         switch (choice) {
             case 1:
-                Session selectedSession = selectReservedSession();
-                System.out.println();
-                if (!confirmSession(selectedSession)) {
-                    System.out.println("Aborted.");
-                    return;
+                Session[] chosenSessions = reserveStudentClasses();
+                if(chosenSessions.length != 0){
+                    Receipt.generateCourseReceipt(loggedInStudent, chosenSessions);
                 }
-
-                loggedInStudent.addReservation(selectedSession);
-                System.out.println("Successfully Added Class!");
                 break;
+
             case 2:
                 loggedInStudent.listReservations();
                 break;
@@ -222,6 +220,7 @@ public class Academy {
                 if (!confirmSession(selectedEditSession)) {
                     return;
                 }
+                loggedInStudent.getCard().cashIn(selectedEditSession.getCourse().getCourseFee());
 
                 Session newSelectedSession = selectReservedSession();
                 if (!confirmSession(newSelectedSession)) {
@@ -230,6 +229,7 @@ public class Academy {
                 }
 
                 loggedInStudent.editReservation(selectedEditSession, newSelectedSession);
+                loggedInStudent.getCard().cashOut(newSelectedSession.getCourse().getCourseFee() * 1.5);
                 System.out.println("Successfully Edited Class!");
                 break;
             case 4:
@@ -247,6 +247,26 @@ public class Academy {
                 logOut();
                 break;
         }
+    }
+
+    private static Session[] reserveStudentClasses() {
+        ArrayList<Session> sessions = new ArrayList<>();
+        char choice = 'Y';
+        while(Character.toUpperCase(choice) == 'Y'){
+            Session selectedSession = selectReservedSession();
+            System.out.println();
+            if (!confirmSession(selectedSession)) {
+                System.out.println("Aborted.");
+                return null;
+            }
+            loggedInStudent.addReservation(selectedSession);
+            sessions.add(selectedSession);
+            System.out.println("Successfully Added Class!");
+            
+            System.out.print("Do you want to continue reserving more classes? (Y/N): ");
+            choice = scan.next().charAt(0);
+        }
+        return sessions.toArray(new Session[0]);
     }
 
     private static void logOut() {
@@ -302,7 +322,7 @@ public class Academy {
         String email = scan.next();
 
         System.out.print("Enter your password: ");
-        String password = new String(System.console().readPassword());
+        String password = scan.next();
         return new String[]{ email, password };
     }
 

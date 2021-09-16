@@ -8,10 +8,10 @@ public class Slot {
 
     public final static Slot[] AVAILABLE_SLOTS = {
         new Slot(setupTimeSlot(9, 00), setupTimeSlot(10, 30)),
-        new Slot(setupTimeSlot(10, 00), setupTimeSlot(10, 00)),
         new Slot(setupTimeSlot(9, 00), setupTimeSlot(11, 00)),
         new Slot(setupTimeSlot(10, 00), setupTimeSlot(12, 00)),
         new Slot(setupTimeSlot(10, 00), setupTimeSlot(11, 00)),
+        new Slot(setupTimeSlot(14, 00), setupTimeSlot(15, 00)),
         new Slot(setupTimeSlot(14, 00), setupTimeSlot(16, 00)),
         new Slot(setupTimeSlot(16, 30), setupTimeSlot(18, 30)),
         new Slot(setupTimeSlot(16, 00), setupTimeSlot(17, 30)),
