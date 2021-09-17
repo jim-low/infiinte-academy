@@ -4,7 +4,7 @@ import java.util.Random;
 import management.Academy;
 
 public interface Payment {
-    public static <T> boolean performPayment(Card card, double amount) throws InterruptedException {
+    public static boolean performPayment(Card card, double amount) throws InterruptedException {
         String accountNumber = Card.promptAccountNumber();
         if (!Card.validateAccount(card.getAccountNumber(), accountNumber)) {
             System.out.println("Your account number does not match.");
@@ -59,9 +59,9 @@ public interface Payment {
     }
 
     public static String generateOTP() {
-        String characters = "ABCDEFGabcdefg1234567"; //character involve
-        String otp = "";                     //otp string
-        for (int i = 0; i < 7; i++) { //generate otp
+        String characters = "ABCDEFGabcdefg1234567";
+        String otp = "";
+        for (int i = 0; i < 7; i++) {
             int index = (int)(Math.random()*characters.length());
             otp += characters.charAt(index);
         }
@@ -73,8 +73,7 @@ public interface Payment {
             Thread.sleep(seconds * 1000);
         }
         catch (Exception e) {
-            System.out.println("Something bad happened :(");
-            System.out.println("But thats not my problem");
+            System.out.println("Something bad has happened :(");
         }
     }
 }

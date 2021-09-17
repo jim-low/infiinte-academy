@@ -5,7 +5,7 @@ import system.Course;
 import system.Session;
 import system.SystemCodes;
 
-public class Receipt {
+abstract public class Receipt {
     private static int receiptCode = 1000;
 
     public static void generateRegistrationReceipt(Student student) {

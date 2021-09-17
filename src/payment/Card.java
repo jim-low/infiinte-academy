@@ -82,6 +82,7 @@ public class Card extends Transaction {
         if(this.balance < cash){
             return;
         }
+
         this.balance -= cash;
     }
 
