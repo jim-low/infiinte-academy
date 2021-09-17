@@ -339,17 +339,29 @@ public class Academy {
         }
 
         Person loggedInPerson = loggedInStudent == null ? loggedInInstructor : loggedInStudent;
+        String id = loggedInPerson instanceof Student ? loggedInStudent.getID() : loggedInInstructor.getID();
+        String prefix = loggedInPerson.getGender().equals("Male") ? "Mr" : "Ms";
         System.out.println();
-        System.out.printf("                    Name: %s\n", loggedInPerson.getName());
+        System.out.printf("Welcome, %s. %s!\n", prefix, loggedInPerson.getName());
+        System.out.printf("ID: %s\n", id);
         System.out.println();
     }
 
     private static void exitSystem() {
-        System.out.println(" ________             __                                                         __");
-        System.out.println("/_  __/ /  ___ ____  / /__  __ _____  __ __  _  _____ ______ __  __ _  __ ______/ /");
-        System.out.println(" / / / _ \\/ _ `/ _ \\/  '_/ / // / _ \\/ // / | |/ / -_) __/ // / /  ' \\/ // / __/ _ \\");
-        System.out.println("/_/ /_//_/\\_,_/_//_/_/\\_\\  \\_, /\\___/\\_,_/  |___/\\__/_/  \\_, / /_/_/_/\\_,_/\\__/_//_/");
+        System.out.println(" ________             __                                                         __   __");
+        System.out.println("/_  __/ /  ___ ____  / /__  __ _____  __ __  _  _____ ______ __  __ _  __ ______/ /  / /");
+        System.out.println(" / / / _ \\/ _ `/ _ \\/  '_/ / // / _ \\/ // / | |/ / -_) __/ // / /  ' \\/ // / __/ _ \\/_/");
+        System.out.println("/_/ /_//_/\\_,_/_//_/_/\\_\\  \\_, /\\___/\\_,_/  |___/\\__/_/  \\_, / /_/_/_/\\_,_/\\__/_//_(_)");
         System.out.println("                          /___/                         /___/");
+
+        System.out.println();
+
+        System.out.println("   ___             __                    __");
+        System.out.println("  / _ )__ _____   / /  __ _____ ___ ___ / /");
+        System.out.println(" / _  / // / -_) / _ \\/ // / -_) -_) -_)_/");
+        System.out.println("/____/\\_, /\\__/ /_.__/\\_, /\\__/\\__/\\__(_)");
+        System.out.println("     /___/           /___/");
+
         loginFlag = LoginFlags.EXIT;
     }
 }
