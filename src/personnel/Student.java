@@ -96,7 +96,6 @@ public class Student extends Person implements Reservation {
     public String toString(){
         return "Student ID      : " + studentID +" \n"
              + "Student Name    : " + this.getName() +" \n"
-             + "Student email   : " + this.getEmail()+" \n"
-             + "Enrolled Classes: " + enrolledCourses.toString();
+             + "Student email   : " + this.getEmail();
     }
 }
