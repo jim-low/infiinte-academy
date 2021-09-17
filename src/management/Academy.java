@@ -203,11 +203,12 @@ public class Academy {
         return student != null ? student.getReservation(selection - 1) : instructor.getReservation(selection - 1);
     }
 
-    private static void parseStudentChoice() {
+    private static void parseStudentChoice() throws InterruptedException, IOException {
         switch (choice) {
             case 1:
                 Session[] chosenSessions = reserveStudentClasses();
                 if(chosenSessions.length != 0){
+                    clearScreen();
                     Receipt.generateCourseReceipt(loggedInStudent, chosenSessions);
                 }
                 break;
