@@ -3,16 +3,14 @@ package personnel;
 import java.util.ArrayList;
 import system.*;
 import management.Reservation;
-import management.Academy;
 
 public class Instructor extends Person implements Reservation {
-    private ArrayList<String> qualifications = new ArrayList<>();
     private Course course;
     private ArrayList<Session> classes = new ArrayList<>();
     private static ArrayList<Instructor> instructorList = new ArrayList<>();
     private String instructorID;
     private static int nextInstructorID = 1000;
-    
+
     public static final double INSTRUCTOR_REGISTRATION_FEE = 400;
 
     public Instructor(Person person){
@@ -24,32 +22,6 @@ public class Instructor extends Person implements Reservation {
         this.instructorID = SystemCodes.INS.toString() + nextInstructorID;;
         this.course = course;
         ++nextInstructorID;
-    }
-
-    public void addQualification(String qualification){
-        qualifications.add(qualification);
-    }
-
-    public void editQualification(String qualification){
-        for(int i=0; i < qualifications.size(); i++){
-            if(qualifications.get(i).equals(qualification)){
-                System.out.println("Enter your updated qualifcation :");
-                String updated = Academy.scan.nextLine();
-                qualifications.set(i,updated);
-            }
-        }
-    }
-
-    public void listQualification(){
-        System.out.print("Your Qualifications :");
-        for (int i = 0; i < qualifications.size(); i++) {
-            System.out.print(i+1 +".");
-            System.out.println(qualifications.get(i));
-        }
-    }
-
-    public void removeQualification(String qualification){
-        qualifications.remove(qualification);
     }
 
     public static void add(Instructor instructor){
