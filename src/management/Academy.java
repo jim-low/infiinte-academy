@@ -262,7 +262,7 @@ public class Academy {
             loggedInStudent.addReservation(selectedSession);
             sessions.add(selectedSession);
             System.out.println("Successfully Added Class!");
-            
+
             System.out.print("Do you want to continue reserving more classes? (Y/N): ");
             choice = scan.next().charAt(0);
         }
@@ -291,6 +291,7 @@ public class Academy {
                 logIn();
                 break;
             case 3:
+                clearScreen();
                 exitSystem();
         }
     }
@@ -322,7 +323,7 @@ public class Academy {
         String email = scan.next();
 
         System.out.print("Enter your password: ");
-        String password = scan.next();
+        String password = new String(System.console().readPassword());
         return new String[]{ email, password };
     }
 

@@ -70,7 +70,7 @@ public interface Registration {
         String email = Academy.scan.next();
 
         System.out.print("Enter your password: ");
-        String password = Academy.scan.next();
+        String password = new String(System.console().readPassword());
 
         System.out.println();
         System.out.println("Select your gender: ");
